@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         takePictureBtn = findViewById(R.id.btn_take_picture);
         camera1 = findViewById(R.id.sfv_camera1);
-        cameraPresenter = new CameraPresenter();
+        cameraPresenter = new CameraPresenter(this);
         takePictureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

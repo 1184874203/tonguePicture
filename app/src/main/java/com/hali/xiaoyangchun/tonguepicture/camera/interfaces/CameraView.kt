@@ -1,5 +1,7 @@
 package com.hali.xiaoyangchun.tonguepicture.camera.interfaces
 
+import android.graphics.Bitmap
+
 interface CameraView {
 
     fun onResume()
@@ -13,6 +15,6 @@ interface CameraView {
     fun switchCameraFacing()
 
     interface TakePictureCallback {
-        fun onFinish(data: ByteArray?, facing: Int)
+        fun onFinish(bitmap: Bitmap)
     }
 }

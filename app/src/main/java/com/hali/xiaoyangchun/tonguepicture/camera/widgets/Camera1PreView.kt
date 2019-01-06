@@ -3,7 +3,10 @@ package com.hali.xiaoyangchun.tonguepicture.camera.widgets
 import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageFormat
+import android.graphics.Matrix
 import android.hardware.Camera
 import android.util.AttributeSet
 import android.util.Log
@@ -291,9 +294,21 @@ class Camera1PreView : SurfaceView, CameraView, SurfaceHolder.Callback {
 
     private var mPictureCallback = object : Camera.PictureCallback {
         override fun onPictureTaken(data: ByteArray?, camera: Camera?) {
+            if (data == null) {
+                Log.e(TAG, "error in taking picture, data in callback cannot be null")
+                return
+            }
             Log.d(TAG, "onPictureTaken start timestemp : ${System.currentTimeMillis()}")
+            var bitmap = BitmapFactory.decodeByteArray(data, 0, data.size)
+            var matrix = Matrix()
+            if (mCurrentCameraFacing == Camera.CameraInfo.CAMERA_FACING_BACK) {
+                matrix.setRotate(90f)
+            } else {
+                matrix.setRotate(-90f)
+            }
+            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, false)
             if (takePictureCallback != null) {
-                takePictureCallback!!.onFinish(data, mCurrentCameraFacing)
+                takePictureCallback!!.onFinish(bitmap)
             }
             startPreview(mSurfaceHolder)
             isPictureCaptureInProgess.set(false)

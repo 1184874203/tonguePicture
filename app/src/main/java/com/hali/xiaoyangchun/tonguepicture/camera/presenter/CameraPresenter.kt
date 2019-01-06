@@ -1,19 +1,35 @@
 package com.hali.xiaoyangchun.tonguepicture.camera.presenter
 
-import android.graphics.Matrix
-import android.hardware.Camera
+import android.content.Context
+import android.graphics.Bitmap
+import com.hali.xiaoyangchun.tonguepicture.R
 import com.hali.xiaoyangchun.tonguepicture.camera.interfaces.CameraView
-import com.hali.xiaoyangchun.tonguepicture.utils.FileUtil
+import com.hali.xiaoyangchun.tonguepicture.camera.widgets.PictureDialog
 
-class CameraPresenter {
+class CameraPresenter(context: Context) {
     private var cameraView: CameraView? = null
-    private var fileName: String? = null
+    private lateinit var picDailog: PictureDialog
+
+    init {
+        picDailog = PictureDialog(context, R.layout.picture_dialog_layout, R.style.DialogTheme)
+        picDailog.setDialogListener(object : PictureDialog.onPicDialogClick {
+            override fun onUpLoadClick() {
+
+            }
+
+            override fun onCancelClick() {
+                picDailog.dismissPicDailog()
+            }
+        })
+    }
 
     fun attachView(cameraView: CameraView) {
         this.cameraView = cameraView
+        this.cameraView!!.onResume()
     }
 
     fun detachView() {
+        this.cameraView!!.onPause()
         this.cameraView = null
     }
 
@@ -25,20 +41,11 @@ class CameraPresenter {
         }
     }
 
-    fun setFileName(fileName: String) {
-        this.fileName = FileUtil.picturePath + fileName
-    }
-
     fun takePicture() {
         cameraView!!.takePicture(object : CameraView.TakePictureCallback {
-            override fun onFinish(data: ByteArray?, facing: Int) {
-                var matrix = Matrix()
-                if (facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
-                    matrix.setRotate(90f)
-                } else {
-                    matrix.setRotate(-90f)
-                }
-                FileUtil.savePicture(data, fileName, matrix)
+            override fun onFinish(bitmap: Bitmap) {
+                picDailog.setPicture(bitmap)
+                picDailog.showPicDialog()
             }
         })
     }
