@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'org.greenrobot.greendao'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -28,7 +30,14 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    //greendao数据库
+    implementation "org.greenrobot:greendao:3.2.0"
 }
 repositories {
     mavenCentral()
+}
+greendao {
+    schemaVersion 1
+    daoPackage 'com.hali.xiaoyangchun.tonguepicture.dao'
+    targetGenDir 'src/main/java'
 }

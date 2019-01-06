@@ -3,10 +3,13 @@ package com.hali.xiaoyangchun.tonguepicture.camera.presenter
 import android.content.Context
 import android.graphics.Bitmap
 import com.hali.xiaoyangchun.tonguepicture.R
+import com.hali.xiaoyangchun.tonguepicture.bean.User
 import com.hali.xiaoyangchun.tonguepicture.camera.interfaces.CameraView
 import com.hali.xiaoyangchun.tonguepicture.camera.widgets.PictureDialog
+import com.hali.xiaoyangchun.tonguepicture.dao.Manager.ManagerFactory
+import com.hali.xiaoyangchun.tonguepicture.utils.FileUtil
 
-class CameraPresenter(context: Context) {
+class CameraPresenter(private var context: Context) {
     private var cameraView: CameraView? = null
     private lateinit var picDailog: PictureDialog
 
@@ -14,7 +17,8 @@ class CameraPresenter(context: Context) {
         picDailog = PictureDialog(context, R.layout.picture_dialog_layout, R.style.DialogTheme)
         picDailog.setDialogListener(object : PictureDialog.onPicDialogClick {
             override fun onUpLoadClick() {
-
+                var picPath = FileUtil.savePicture(picDailog.bitmap)
+                picDailog.dismissPicDailog()
             }
 
             override fun onCancelClick() {
@@ -50,4 +54,7 @@ class CameraPresenter(context: Context) {
         })
     }
 
+    fun saveInDB(user: User) {
+        ManagerFactory.getInstance(context).getUserManager().save(user)
+    }
 }
