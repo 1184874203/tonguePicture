@@ -1,23 +1,29 @@
 package com.hali.xiaoyangchun.tonguepicture.camera.presenter
 
-import android.content.Context
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Bitmap
+import android.os.Bundle
 import com.hali.xiaoyangchun.tonguepicture.R
 import com.hali.xiaoyangchun.tonguepicture.bean.User
 import com.hali.xiaoyangchun.tonguepicture.camera.interfaces.CameraView
 import com.hali.xiaoyangchun.tonguepicture.camera.widgets.PictureDialog
 import com.hali.xiaoyangchun.tonguepicture.dao.Manager.ManagerFactory
+import com.hali.xiaoyangchun.tonguepicture.ui.activity.SingleFAHelper
+import com.hali.xiaoyangchun.tonguepicture.ui.activity.SingleFragmentActivity
+import com.hali.xiaoyangchun.tonguepicture.ui.fragment.TonguePicCommitFragment
 import com.hali.xiaoyangchun.tonguepicture.utils.FileUtil
 
-class CameraPresenter(private var context: Context) {
+class CameraPresenter(private var context: Activity) {
     private var cameraView: CameraView? = null
     private lateinit var picDailog: PictureDialog
 
     init {
-        picDailog = PictureDialog(context, R.layout.picture_dialog_layout, R.style.DialogTheme)
+        picDailog = PictureDialog(context, R.layout.dialog_picdialog_layout, R.style.DialogTheme)
         picDailog.setDialogListener(object : PictureDialog.onPicDialogClick {
             override fun onUpLoadClick() {
-                var picPath = FileUtil.savePicture(picDailog.bitmap)
+                //var picPath = FileUtil.savePicture(picDailog.bitmap)
+                SingleFAHelper.gotoTonguePicCommitFragment(context, picDailog.bitmap!!)
                 picDailog.dismissPicDailog()
             }
 

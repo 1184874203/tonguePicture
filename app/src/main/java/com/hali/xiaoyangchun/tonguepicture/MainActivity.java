@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.hali.xiaoyangchun.tonguepicture.camera.presenter.CameraPresenter;
 import com.hali.xiaoyangchun.tonguepicture.camera.widgets.Camera1PreView;
+import com.hali.xiaoyangchun.tonguepicture.ui.activity.SingleFAHelper;
 
 public class MainActivity extends Activity {
 
