@@ -22,9 +22,10 @@ class CameraPresenter(private var context: Activity) {
         picDailog = PictureDialog(context, R.layout.dialog_picdialog_layout, R.style.DialogTheme)
         picDailog.setDialogListener(object : PictureDialog.onPicDialogClick {
             override fun onUpLoadClick() {
-                //var picPath = FileUtil.savePicture(picDailog.bitmap)
-                SingleFAHelper.gotoTonguePicCommitFragment(context, picDailog.bitmap!!)
+                var picPath = FileUtil.savePicture(picDailog.bitmap)
+                SingleFAHelper.gotoTonguePicCommitFragment(context, picPath!!)
                 picDailog.dismissPicDailog()
+                context.finish()
             }
 
             override fun onCancelClick() {

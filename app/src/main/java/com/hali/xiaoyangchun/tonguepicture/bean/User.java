@@ -13,15 +13,17 @@ public class User {
     private int age;
     private String sex;
     private String otherString;
-    @Generated(hash = 647775872)
+    private Long time;
+    @Generated(hash = 1978371067)
     public User(long id, String PicPath, String name, int age, String sex,
-            String otherString) {
+            String otherString, Long time) {
         this.id = id;
         this.PicPath = PicPath;
         this.name = name;
         this.age = age;
         this.sex = sex;
         this.otherString = otherString;
+        this.time = time;
     }
     @Generated(hash = 586692638)
     public User() {
@@ -61,5 +63,11 @@ public class User {
     }
     public void setPicPath(String PicPath) {
         this.PicPath = PicPath;
+    }
+    public Long getTime() {
+        return this.time;
+    }
+    public void setTime(Long time) {
+        this.time = time;
     }
 }

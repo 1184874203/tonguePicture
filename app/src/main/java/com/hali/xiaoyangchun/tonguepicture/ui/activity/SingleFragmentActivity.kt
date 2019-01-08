@@ -10,14 +10,19 @@ class SingleFragmentActivity : BaseActivity() {
     companion object {
         val TITLE = "title"
         val TAG = "tag"
+        var NEEDTOOLBAR = "needToolbar"
+        var FULLSCREEN = "fullScreen"
     }
+
     override fun getLayoutId() = R.layout.activity_singlefragment
 
     override fun initViews() {
         var toolbar = findView<Toolbar>(R.id.common_toolbar)
         var title = intent.getStringExtra(TITLE)
         var tag = intent.getStringExtra(TAG)
-        initToolBar(toolbar, title, true)
+        var needToolbar = intent.getBooleanExtra(NEEDTOOLBAR, false)
+        if (needToolbar)
+            initToolBar(toolbar, title, true)
         var singleFragment = FragmentFactory.createFragmentByTag(tag, intent.extras)
         if (singleFragment != null)
             supportFragmentManager.beginTransaction().add(R.id.content, singleFragment).show(singleFragment).commitNow()
@@ -26,4 +31,6 @@ class SingleFragmentActivity : BaseActivity() {
     override fun initData() {
 
     }
+
+    override fun setFullScreen() = intent.getBooleanExtra(FULLSCREEN, false)
 }

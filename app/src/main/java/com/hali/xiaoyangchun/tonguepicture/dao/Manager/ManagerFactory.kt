@@ -3,7 +3,7 @@ package com.hali.xiaoyangchun.tonguepicture.dao.Manager
 import android.content.Context
 
 class ManagerFactory(private var context: Context) {
-    var mUserManager: UserManager? = null
+    private var mUserManager: UserManager? = null
 
     companion object {
         private var mInstance: ManagerFactory? = null

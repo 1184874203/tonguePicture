@@ -7,14 +7,24 @@ object FragmentFactory {
     fun createFragmentByTag(tag: String, bundle: Bundle): BaseFragment? {
         when (tag) {
             TonguePicCommitFragment.TonguePicCommitFragment_TAG -> {
-                return CreateTonguePicCommitFragment(bundle)
+                return createTonguePicCommitFragment(bundle)
+            }
+            CameraFragment.CAMERAFRAGMENT_TAG -> {
+                return createCameraFragment(bundle)
             }
         }
         return null
     }
 
-    fun CreateTonguePicCommitFragment(bundle: Bundle):BaseFragment? {
+    fun createTonguePicCommitFragment(bundle: Bundle):BaseFragment? {
         var fragment = TonguePicCommitFragment()
+        if (bundle != null)
+            fragment.arguments = bundle
+        return fragment
+    }
+
+    fun createCameraFragment(bundle: Bundle): BaseFragment? {
+        var fragment = CameraFragment()
         if (bundle != null)
             fragment.arguments = bundle
         return fragment

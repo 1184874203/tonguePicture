@@ -8,7 +8,7 @@
         android:id="@+id/common_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
+        android:background="#ff35b5e5"
         android:clipToPadding="true"
         android:fitsSystemWindows="true"
         android:minHeight="60dp"

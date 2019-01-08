@@ -12,10 +12,6 @@ open abstract class BaseFragment : Fragment() {
 
     protected lateinit var mActivity: Activity
 
-    private var isContentVisible = false
-    private var isInitView = false
-    private var isFirstLoad = true
-
     lateinit var convertView: View
     private var views = SparseArray<View>()
 
@@ -28,28 +24,15 @@ open abstract class BaseFragment : Fragment() {
         mActivity = activity!!
     }
 
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser) {
-            isContentVisible = true
-            lazyLoad()
-        } else {
-            isContentVisible = false
-        }
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         convertView = inflater.inflate(getLayoutId(), container, false)
-        initViews()
-        isInitView = true
-        lazyLoad()
         return convertView
     }
 
-    private fun lazyLoad() {
-        if (!isContentVisible || !isFirstLoad || !isInitView) return
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViews()
         initData()
-        isFirstLoad = false
     }
 
     fun <v: View>findView(viewId: Int): v {
