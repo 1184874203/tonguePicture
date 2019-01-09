@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import com.hali.xiaoyangchun.tonguepicture.R
 
 open abstract class BaseActivity : AppCompatActivity() {
     private var views = SparseArray<View>()
@@ -41,6 +42,7 @@ open abstract class BaseActivity : AppCompatActivity() {
     open fun setFullScreen(): Boolean = false
 
     fun initToolBar(toolbar: Toolbar, title: String, isBack: Boolean) {
+        toolbar.visibility = View.VISIBLE
         toolbar.setTitle(title)
         setSupportActionBar(toolbar)
         if (isBack) {

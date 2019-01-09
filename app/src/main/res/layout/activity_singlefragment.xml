@@ -4,10 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        android:layout_height="60dp"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/common_toolbar"
         android:layout_width="match_parent"
-        layout="@layout/view_common_toolbar"/>
+        android:layout_height="wrap_content"
+        android:background="#ff35b5e5"
+        android:clipToPadding="true"
+        android:fitsSystemWindows="true"
+        android:minHeight="60dp"
+        android:visibility="gone"
+        android:theme="@style/AppTheme.AppBarOverlay" />
 
     <FrameLayout
         android:id="@+id/content"

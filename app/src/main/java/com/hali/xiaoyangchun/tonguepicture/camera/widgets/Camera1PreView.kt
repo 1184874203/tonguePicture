@@ -37,7 +37,7 @@ class Camera1PreView : SurfaceView, CameraView, SurfaceHolder.Callback {
 
     var mCamera: Camera? = null
     var mCameraCount = 1
-    var mCurrentCameraFacing = Camera.CameraInfo.CAMERA_FACING_BACK
+    var mCurrentCameraFacing = Camera.CameraInfo.CAMERA_FACING_FRONT
     lateinit var mSurfaceHolder: SurfaceHolder
     val isPictureCaptureInProgess = AtomicBoolean(false)
     var takePictureCallback: CameraView.TakePictureCallback? = null
@@ -304,7 +304,8 @@ class Camera1PreView : SurfaceView, CameraView, SurfaceHolder.Callback {
             if (mCurrentCameraFacing == Camera.CameraInfo.CAMERA_FACING_BACK) {
                 matrix.setRotate(90f)
             } else {
-                matrix.setRotate(-90f)
+                matrix.postScale(1f, -1f)
+                matrix.postRotate(-90f)
             }
             bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, false)
             if (takePictureCallback != null) {

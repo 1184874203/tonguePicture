@@ -9,6 +9,7 @@ import com.hali.xiaoyangchun.tonguepicture.bean.User
 import com.hali.xiaoyangchun.tonguepicture.dao.Manager.ManagerFactory
 import com.hali.xiaoyangchun.tonguepicture.ui.base.BaseFragment
 import com.hali.xiaoyangchun.tonguepicture.dao.Manager.PreferenceManager
+import com.hali.xiaoyangchun.tonguepicture.listener.ChangeListenerManager
 import kotlinx.android.synthetic.main.fragment_tonguepic_commit.*
 import java.io.File
 
@@ -38,7 +39,9 @@ class TonguePicCommitFragment : BaseFragment() {
         iv_tonguePic = findView(R.id.tonguePic)
         btn_commit.setOnClickListener({
             saveInfo()
-            saveDB()
+            saveDB({
+                ChangeListenerManager.getInstance().notifyDataChanged(ChangeListenerManager.CHANGELISTENERMANAGER_DB_INSERT, it)
+            })
             activity!!.finish()
         })
     }
@@ -59,14 +62,16 @@ class TonguePicCommitFragment : BaseFragment() {
         saveInfo()
     }
 
-    private fun saveDB() {
+    private fun saveDB(action: (user: User) -> Unit) {
         var user = User()
+        user.id = System.currentTimeMillis()
         user.name = "" + edt_name.text
         user.age = Integer.valueOf("" + edt_age.text)
         user.otherString = "" + edt_otherString.text
         user.sex = "" + edt_sex.text
         user.time = System.currentTimeMillis()
         ManagerFactory.getInstance(activity!!).getUserManager().save(user)
+        action(user)
     }
 
     private fun saveInfo() {
