@@ -34,6 +34,10 @@ dependencies {
     implementation "org.greenrobot:greendao:3.2.0"
     //glide图片加载框架
     implementation "com.github.bumptech.glide:glide:3.7.0"
+    //okgo网络通信框架
+    implementation "com.lzy.net:okgo:3.0.4"
+    //gson数据传输框架
+    implementation "com.google.code.gson:gson:2.6.2"
     //ui设计框架
     implementation "com.android.support:appcompat-v7:25.1.1"
     implementation 'com.android.support:design:27.1.1'
