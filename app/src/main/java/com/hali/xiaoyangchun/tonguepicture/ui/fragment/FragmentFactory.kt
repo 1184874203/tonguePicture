@@ -12,6 +12,9 @@ object FragmentFactory {
             CameraFragment.CAMERAFRAGMENT_TAG -> {
                 return createCameraFragment(bundle)
             }
+            TonguePicDetailFragment.TonguePicDetailFragment_TAG -> {
+                return createTonguePicDetailFragment(bundle)
+            }
         }
         return null
     }
@@ -25,6 +28,13 @@ object FragmentFactory {
 
     fun createCameraFragment(bundle: Bundle): BaseFragment? {
         var fragment = CameraFragment()
+        if (bundle != null)
+            fragment.arguments = bundle
+        return fragment
+    }
+
+    fun createTonguePicDetailFragment(bundle: Bundle): BaseFragment? {
+        var fragment = TonguePicDetailFragment()
         if (bundle != null)
             fragment.arguments = bundle
         return fragment

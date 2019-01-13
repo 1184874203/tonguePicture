@@ -2,7 +2,6 @@ package com.hali.xiaoyangchun.tonguepicture.ui.base
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.View
 import com.hali.xiaoyangchun.tonguepicture.R
 import com.hali.xiaoyangchun.tonguepicture.model.net.interfaces.OkGoInterface
 import com.lzy.okgo.OkGo
@@ -11,7 +10,7 @@ import com.lzy.okgo.model.Response
 abstract class BaseRequestFragment<D> : BaseFragment(), OkGoInterface<D> {
 
     protected open var TAG = ""
-    protected var progressDialog = Dialog(activity, R.style.progress_dialog)
+    protected lateinit var progressDialog: Dialog
 
     override fun onSuccess(response: Response<D>, requestCode: Int) {
         hideProgressDialog()
@@ -21,8 +20,9 @@ abstract class BaseRequestFragment<D> : BaseFragment(), OkGoInterface<D> {
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        progressDialog = Dialog(activity, R.style.progress_dialog)
         showProgressDialog()
     }
 

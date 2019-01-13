@@ -1,8 +1,11 @@
 package com.hali.xiaoyangchun.tonguepicture.ui.fragment
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import com.hali.xiaoyangchun.tonguepicture.R
 import com.hali.xiaoyangchun.tonguepicture.bean.User
 import com.hali.xiaoyangchun.tonguepicture.dao.Manager.ManagerFactory
@@ -36,6 +39,31 @@ class TongueNoteListFragment : BaseFragment(), ChangeListenr {
         dataList = ManagerFactory.getInstance(activity!!).getUserManager().queryAll()
         adapter = TongNoteListAdapter(activity!!, dataList)
         rv_list.adapter = adapter
+        initListener()
+    }
+
+    fun initListener() {
+        adapter.itemClickListener = object : TongNoteListAdapter.ItemClickListener{
+            override fun onItemClick(view: View, user: User) {
+                SingleFAHelper.gotoTonguePicDetailFragment(activity!!)
+            }
+        }
+
+        adapter.itemLongClickListener = object : TongNoteListAdapter.ItemLongClickListener {
+            override fun onItemLongClick(view: View, user: User) {
+                var builder = AlertDialog.Builder(activity)
+                builder.setTitle("提示")
+                builder.setMessage("确定删除该条记录？")
+                builder.setCancelable(false)
+                builder.setPositiveButton("确定", {dialog, which ->
+                    ManagerFactory.getInstance(activity!!).getUserManager().delete(user)
+                    dataList.remove(user)
+                    adapter?.notifyDataSetChanged()
+                })
+                builder.setNegativeButton("取消", null)
+                builder.create().show()
+            }
+        }
     }
 
     override fun onChange(key: String, data: Any) {
