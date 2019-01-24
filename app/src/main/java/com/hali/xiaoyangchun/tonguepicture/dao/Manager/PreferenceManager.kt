@@ -26,6 +26,7 @@ class PreferenceManager(private var context: Context) {
             return mPreferenceManager!!
         }
     }
+    private var SHARED_KEY_FIRST_INIT = "shared_key_first_init"
     private var SHARED_KEY_LAST_USER_NAME = "shared_key_last_user_name"
     private var SHARED_KEY_LAST_USER_AGE = "shared_key_last_user_age"
     private var SHARED_KEY_LAST_USER_SEX = "shared_key_last_user_sex"
@@ -55,6 +56,13 @@ class PreferenceManager(private var context: Context) {
             apply {
                 editor.putString(SHARED_KEY_LAST_USER_OTHERSTRING, string)
             }
+
+    fun setUserFirstInited() =
+            apply {
+                editor.putBoolean(SHARED_KEY_FIRST_INIT, false)
+            }
+
+    fun isUserFirstInit() = mSharedPreferences.getBoolean(SHARED_KEY_FIRST_INIT, true)
 
     fun getLastUserName() = mSharedPreferences.getString(SHARED_KEY_LAST_USER_NAME, "")
 
