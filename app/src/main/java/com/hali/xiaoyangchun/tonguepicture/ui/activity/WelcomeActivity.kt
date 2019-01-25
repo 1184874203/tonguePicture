@@ -1,6 +1,7 @@
 package com.hali.xiaoyangchun.tonguepicture.ui.activity
 
 import android.content.Intent
+import android.widget.ImageView
 import com.hali.xiaoyangchun.tonguepicture.MainActivity
 import com.hali.xiaoyangchun.tonguepicture.R
 import com.hali.xiaoyangchun.tonguepicture.dao.Manager.PreferenceManager
@@ -18,9 +19,9 @@ class WelcomeActivity : BaseActivity() {
     }
 
     override fun initData() {
-        Thread({
+        findView<ImageView>(R.id.iv_welcome).animate().alpha(1.0f).scaleX(1.1f).scaleY(1.1f).setDuration(1000).withEndAction({
             try {
-                sleep(1500)
+                sleep(500)
                 isFirst = PreferenceManager.getInstance(this).isUserFirstInit()
                 if (isFirst) {
                     var intent = Intent(this, GuidePageActivity::class.java)
