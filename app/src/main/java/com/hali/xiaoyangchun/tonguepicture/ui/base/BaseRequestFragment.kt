@@ -7,12 +7,12 @@ import com.hali.xiaoyangchun.tonguepicture.model.net.interfaces.OkGoInterface
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.model.Response
 
-abstract class BaseRequestFragment<D> : BaseFragment(), OkGoInterface<D> {
+abstract class BaseRequestFragment : BaseFragment(), OkGoInterface {
 
     protected open var TAG = ""
     protected lateinit var progressDialog: Dialog
 
-    override fun onSuccess(response: D?, requestCode: Int) {
+    override fun onSuccess(response: Any?, requestCode: Int) {
 
     }
 

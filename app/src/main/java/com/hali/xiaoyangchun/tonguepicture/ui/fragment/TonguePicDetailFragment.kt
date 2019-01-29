@@ -4,7 +4,7 @@ import com.hali.xiaoyangchun.tonguepicture.R
 import com.hali.xiaoyangchun.tonguepicture.bean.User
 import com.hali.xiaoyangchun.tonguepicture.ui.base.BaseRequestFragment
 
-class TonguePicDetailFragment : BaseRequestFragment<User>() {
+class TonguePicDetailFragment : BaseRequestFragment() {
 
     companion object {
         val TonguePicDetailFragment_TAG = "TonguePicDetailFragment_TAG"

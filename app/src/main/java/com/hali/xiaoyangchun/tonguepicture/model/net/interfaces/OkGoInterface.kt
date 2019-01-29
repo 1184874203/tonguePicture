@@ -1,8 +1,8 @@
 package com.hali.xiaoyangchun.tonguepicture.model.net.interfaces
 
-interface OkGoInterface<T> {
+interface OkGoInterface {
 
-    fun onSuccess(response: T?, requestCode: Int)
+    fun onSuccess(response: Any?, requestCode: Int)
 
     fun onError(error: String)
 

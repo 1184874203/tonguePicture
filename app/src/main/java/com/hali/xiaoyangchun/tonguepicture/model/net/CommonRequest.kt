@@ -1,6 +1,7 @@
 package com.hali.xiaoyangchun.tonguepicture.model.net
 
 import com.hali.xiaoyangchun.tonguepicture.bean.ImageUploadBean
+import com.hali.xiaoyangchun.tonguepicture.bean.User
 import com.hali.xiaoyangchun.tonguepicture.model.net.callback.JsonCallback
 import com.hali.xiaoyangchun.tonguepicture.model.net.interfaces.OkGoInterface
 import com.lzy.okgo.OkGo
@@ -11,6 +12,7 @@ object CommonRequest {
 
     private val POST_UPLOAD_FILE = "file"
     private val POST_JSON = "jsonString"
+    private val GET_DETIAL_BYID = "id"
 
     private fun <T> checkData(res: Response<MainResult<T>>): T? {
         var body = res.body()
@@ -21,7 +23,7 @@ object CommonRequest {
         return null
     }
 
-    fun uploadImage(callback: OkGoInterface<ImageUploadBean>, file: File) {
+    fun uploadImage(callback: OkGoInterface, file: File) {
         OkGo.post<MainResult<ImageUploadBean>>(RequestConstant.REQUEST_URL_UPLOADIMAGE)
                 .params(POST_UPLOAD_FILE, file)
                 .execute(object : JsonCallback<MainResult<ImageUploadBean>>() {
@@ -29,6 +31,36 @@ object CommonRequest {
                         callback.onSuccess(checkData(response),RequestConstant.REQUESTCODE_UPLOADIMAGE)
                     }
                     override fun onError(response: Response<MainResult<ImageUploadBean>>?) {
+                        super.onError(response)
+                        callback.onError(response.toString())
+                    }
+                })
+    }
+
+    fun postTongueInfo(jsonString : String, callback: OkGoInterface) {
+        OkGo.post<MainResult<Void>>(RequestConstant.REQUEST_URL_POST_tONGUEINFO)
+                .params(POST_JSON, jsonString)
+                .execute(object : JsonCallback<MainResult<Void>>() {
+                    override fun onSuccess(response: Response<MainResult<Void>>) {
+                        callback.onSuccess(checkData(response), RequestConstant.REQUESTCODE_POST_TONGUEINFO)
+                    }
+
+                    override fun onError(response: Response<MainResult<Void>>?) {
+                        super.onError(response)
+                        callback.onError(response.toString())
+                    }
+                })
+    }
+
+    fun getTongueDetial(id: String, callback: OkGoInterface) {
+        OkGo.get<MainResult<User>>(RequestConstant.REQUEST_URL_TONGUEPICTURE_DETIAL)
+                .params(GET_DETIAL_BYID, id)
+                .execute(object : JsonCallback<MainResult<User>>() {
+                    override fun onSuccess(response: Response<MainResult<User>>) {
+                        callback.onSuccess(checkData(response), RequestConstant.REQUESTCODE_TONGUEPICTURE_DETIAL)
+                    }
+
+                    override fun onError(response: Response<MainResult<User>>?) {
                         super.onError(response)
                         callback.onError(response.toString())
                     }
