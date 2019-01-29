@@ -5,11 +5,14 @@ import android.widget.EditText
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.hali.xiaoyangchun.tonguepicture.R
+import com.hali.xiaoyangchun.tonguepicture.bean.ImageUploadBean
 import com.hali.xiaoyangchun.tonguepicture.bean.User
 import com.hali.xiaoyangchun.tonguepicture.dao.Manager.ManagerFactory
 import com.hali.xiaoyangchun.tonguepicture.ui.base.BaseFragment
 import com.hali.xiaoyangchun.tonguepicture.dao.Manager.PreferenceManager
 import com.hali.xiaoyangchun.tonguepicture.listener.ChangeListenerManager
+import com.hali.xiaoyangchun.tonguepicture.model.net.CommonRequest
+import com.hali.xiaoyangchun.tonguepicture.model.net.interfaces.OkGoInterface
 import kotlinx.android.synthetic.main.fragment_tonguepic_commit.*
 import java.io.File
 
@@ -28,6 +31,8 @@ class TonguePicCommitFragment : BaseFragment() {
 
     private lateinit var preferenceManager: PreferenceManager
 
+    private lateinit var file: File
+
     override fun getLayoutId() = R.layout.fragment_tonguepic_commit
 
     override fun initViews() {
@@ -42,7 +47,8 @@ class TonguePicCommitFragment : BaseFragment() {
             saveDB({
                 ChangeListenerManager.getInstance().notifyDataChanged(ChangeListenerManager.CHANGELISTENERMANAGER_DB_INSERT, it)
             })
-            activity!!.finish()
+            var files = listOf(file)
+            upLoadImage(files)
         })
     }
 
@@ -53,7 +59,7 @@ class TonguePicCommitFragment : BaseFragment() {
         setText(preferenceManager.getLastUserSex(), edt_sex)
         setText(preferenceManager.getLastUserOtherString(), edt_otherString)
         var bitmapPath = arguments?.getString(TONGUEPIC)
-        var file = File(bitmapPath)
+        file = File(bitmapPath)
         Glide.with(this).load(file).into(iv_tonguePic)
     }
 
@@ -87,4 +93,15 @@ class TonguePicCommitFragment : BaseFragment() {
         }
     }
 
+    private fun upLoadImage(files: List<File>) {
+        CommonRequest.uploadImage(object : OkGoInterface<ImageUploadBean>{
+            override fun onSuccess(response: ImageUploadBean?, requestCode: Int) {
+                edit_otherString.setText(response?.url + "")
+            }
+
+            override fun onError(error: String) {
+
+            }
+        })
+    }
 }

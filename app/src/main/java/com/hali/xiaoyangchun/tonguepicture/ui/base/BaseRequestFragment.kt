@@ -12,8 +12,8 @@ abstract class BaseRequestFragment<D> : BaseFragment(), OkGoInterface<D> {
     protected open var TAG = ""
     protected lateinit var progressDialog: Dialog
 
-    override fun onSuccess(response: Response<D>, requestCode: Int) {
-        hideProgressDialog()
+    override fun onSuccess(response: D?, requestCode: Int) {
+
     }
 
     override fun onError(error: String) {
