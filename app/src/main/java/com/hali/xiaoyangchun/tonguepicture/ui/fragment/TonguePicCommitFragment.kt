@@ -5,15 +5,19 @@ import android.widget.EditText
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.hali.xiaoyangchun.tonguepicture.R
+import com.hali.xiaoyangchun.tonguepicture.bean.ImageUploadBean
 import com.hali.xiaoyangchun.tonguepicture.bean.User
 import com.hali.xiaoyangchun.tonguepicture.dao.Manager.ManagerFactory
 import com.hali.xiaoyangchun.tonguepicture.ui.base.BaseFragment
 import com.hali.xiaoyangchun.tonguepicture.dao.Manager.PreferenceManager
 import com.hali.xiaoyangchun.tonguepicture.listener.ChangeListenerManager
+import com.hali.xiaoyangchun.tonguepicture.model.net.CommonRequest
+import com.hali.xiaoyangchun.tonguepicture.model.net.RequestConstant
+import com.hali.xiaoyangchun.tonguepicture.model.net.interfaces.OkGoInterface
 import kotlinx.android.synthetic.main.fragment_tonguepic_commit.*
 import java.io.File
 
-class TonguePicCommitFragment : BaseFragment() {
+class TonguePicCommitFragment : BaseFragment(), OkGoInterface {
     companion object {
         val TonguePicCommitFragment_TAG = "TonguePicCommitFragment_TAG"
         val TONGUEPIC = "tongue_pic"
@@ -41,12 +45,32 @@ class TonguePicCommitFragment : BaseFragment() {
         iv_tonguePic = findView(R.id.tonguePic)
         btn_commit.setOnClickListener({
             saveInfo()
-            saveDB({
-                ChangeListenerManager.getInstance().notifyDataChanged(ChangeListenerManager.CHANGELISTENERMANAGER_DB_INSERT, it)
-            })
-            var files = listOf(file)
-            upLoadImage(files)
+            upLoadImage(file)
         })
+    }
+
+    override fun onSuccess(response: Any?, requestCode: Int) {
+        if (response == null) return
+        when (requestCode) {
+            RequestConstant.REQUESTCODE_UPLOADIMAGE -> {
+                if (response is ImageUploadBean) {
+                    var user = getEditUser()
+                    user.picPath = response.url
+                    CommonRequest.postTongueInfo(user, this)
+                }
+            }
+            RequestConstant.REQUESTCODE_POST_TONGUEINFO -> {
+                saveDB({
+                    ChangeListenerManager.getInstance()
+                            .notifyDataChanged(ChangeListenerManager.CHANGELISTENERMANAGER_DB_INSERT, it)
+                })
+                activity?.finish()
+            }
+        }
+    }
+
+    override fun onError(error: String) {
+
     }
 
     override fun initData() {
@@ -66,6 +90,12 @@ class TonguePicCommitFragment : BaseFragment() {
     }
 
     private fun saveDB(action: (user: User) -> Unit) {
+        var user = getEditUser()
+        ManagerFactory.getInstance(activity!!).getUserManager().save(user)
+        action(user)
+    }
+
+    private fun getEditUser(): User {
         var user = User()
         user.id = System.currentTimeMillis()
         user.name = "" + edt_name.text
@@ -73,8 +103,7 @@ class TonguePicCommitFragment : BaseFragment() {
         user.otherString = "" + edt_otherString.text
         user.sex = "" + edt_sex.text
         user.time = System.currentTimeMillis()
-        ManagerFactory.getInstance(activity!!).getUserManager().save(user)
-        action(user)
+        return user
     }
 
     private fun saveInfo() {
@@ -90,7 +119,7 @@ class TonguePicCommitFragment : BaseFragment() {
         }
     }
 
-    private fun upLoadImage(files: List<File>) {
-
+    private fun upLoadImage(file : File) {
+        CommonRequest.uploadImage(this, file)
     }
 }

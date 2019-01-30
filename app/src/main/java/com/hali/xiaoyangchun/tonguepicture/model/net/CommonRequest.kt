@@ -37,9 +37,9 @@ object CommonRequest {
                 })
     }
 
-    fun postTongueInfo(jsonString : String, callback: OkGoInterface) {
+    fun postTongueInfo(user : User, callback: OkGoInterface) {
         OkGo.post<MainResult<Void>>(RequestConstant.REQUEST_URL_POST_tONGUEINFO)
-                .params(POST_JSON, jsonString)
+                .params(POST_JSON, JsonCreater.toJson(user))
                 .execute(object : JsonCallback<MainResult<Void>>() {
                     override fun onSuccess(response: Response<MainResult<Void>>) {
                         callback.onSuccess(checkData(response), RequestConstant.REQUESTCODE_POST_TONGUEINFO)
