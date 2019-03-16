@@ -1,20 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/windowBackground"
     tools:context=".MainActivity">
 
-    <com.hali.xiaoyangchun.tonguepicture.camera.widgets.Camera1PreView
-        android:id="@+id/sfv_camera1"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_take_picture"
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <com.hali.xiaoyangchun.tonguepicture.camera.CameraView
+                android:id="@+id/camera"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:background="@android:color/black" />
+
+            <com.hali.xiaoyangchun.tonguepicture.view.simplecropview.CropImageView
+                android:id="@+id/cropImageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:padding="24dp"
+                app:scv_background_color="@color/windowBackground"
+                app:scv_crop_mode="fit_image"
+                app:scv_frame_color="@color/colorAccent"
+                app:scv_frame_stroke_weight="1dp"
+                app:scv_guide_color="@color/colorAccent"
+                app:scv_guide_show_mode="show_always"
+                app:scv_guide_stroke_weight="1dp"
+                app:scv_handle_color="@color/colorAccent"
+                app:scv_handle_show_mode="show_always"
+                app:scv_handle_size="14dp"
+                app:scv_min_frame_size="50dp"
+                app:scv_overlay_color="@color/overlay"
+                app:scv_touch_padding="8dp" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/windowBackground">
+
+            <ImageButton
+                android:id="@+id/buttonPickImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="16dp"
+                android:src="@drawable/ic_photo_library_black_24dp" />
+
+
+            <ImageButton
+                android:id="@+id/buttonDone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="16dp"
+                android:src="@drawable/ic_done_black_24dp" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/take_picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:text="拍照!" />
+        app:srcCompat="@drawable/ic_camera"
+        app:useCompatPadding="true" />
+
+    <View
+        android:id="@+id/facing_switch"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="right"
+        android:layout_margin="30dp"
+        android:background="@drawable/ic_switch_camera" />
+
 
 </FrameLayout>
