@@ -19,7 +19,7 @@ class WelcomeActivity : BaseActivity() {
     }
 
     override fun initData() {
-        findView<ImageView>(R.id.iv_welcome).animate().alpha(1.0f).scaleX(1.1f).scaleY(1.1f).setDuration(1000).withEndAction({
+        findView<ImageView>(R.id.iv_welcome).animate().alpha(1.0f).scaleX(1.1f).scaleY(1.1f).setDuration(1000).withEndAction {
             try {
                 sleep(500)
                 isFirst = PreferenceManager.getInstance(this).isUserFirstInit()
@@ -34,7 +34,7 @@ class WelcomeActivity : BaseActivity() {
             } catch (e: InterruptedException) {
                 e.printStackTrace()
             }
-        }).start()
+        }.start()
     }
 
     override fun setFullScreen() = true

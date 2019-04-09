@@ -28,8 +28,9 @@ object CommonRequest {
                 .params(POST_UPLOAD_FILE, file)
                 .execute(object : JsonCallback<MainResult<ImageUploadBean>>() {
                     override fun onSuccess(response: Response<MainResult<ImageUploadBean>>) {
-                        callback.onSuccess(checkData(response),RequestConstant.REQUESTCODE_UPLOADIMAGE)
+                        callback.onSuccess(checkData(response), RequestConstant.REQUESTCODE_UPLOADIMAGE)
                     }
+
                     override fun onError(response: Response<MainResult<ImageUploadBean>>?) {
                         super.onError(response)
                         callback.onError(response.toString())
@@ -37,7 +38,7 @@ object CommonRequest {
                 })
     }
 
-    fun postTongueInfo(user : User, callback: OkGoInterface) {
+    fun postTongueInfo(user: User, callback: OkGoInterface) {
         OkGo.post<MainResult<Void>>(RequestConstant.REQUEST_URL_POST_tONGUEINFO)
                 .params(POST_JSON, JsonCreater.toJson(user))
                 .execute(object : JsonCallback<MainResult<Void>>() {

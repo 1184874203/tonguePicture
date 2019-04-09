@@ -26,11 +26,12 @@ class PreferenceManager(private var context: Context) {
             return mPreferenceManager!!
         }
     }
-    private var SHARED_KEY_FIRST_INIT = "shared_key_first_init"
-    private var SHARED_KEY_LAST_USER_NAME = "shared_key_last_user_name"
-    private var SHARED_KEY_LAST_USER_AGE = "shared_key_last_user_age"
-    private var SHARED_KEY_LAST_USER_SEX = "shared_key_last_user_sex"
-    private var SHARED_KEY_LAST_USER_OTHERSTRING = "shared_key_last_user_otherString"
+
+    private val SHARED_KEY_FIRST_INIT = "shared_key_first_init"
+    private val SHARED_KEY_LAST_USER_NAME = "shared_key_last_user_name"
+    private val SHARED_KEY_LAST_USER_AGE = "shared_key_last_user_age"
+    private val SHARED_KEY_LAST_USER_SEX = "shared_key_last_user_sex"
+    private val SHARED_KEY_LAST_USER_OTHERSTRING = "shared_key_last_user_otherString"
 
     private fun apply(action: () -> Unit) {
         action()

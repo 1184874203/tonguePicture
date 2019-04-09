@@ -3,5 +3,5 @@ package com.hali.xiaoyangchun.tonguepicture.view.simplecropview.callback;
 import android.graphics.Bitmap;
 
 public interface CropCallback extends Callback {
-  void onSuccess(Bitmap cropped);
+    void onSuccess(Bitmap cropped);
 }

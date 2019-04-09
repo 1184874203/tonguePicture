@@ -9,7 +9,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
-import com.hali.xiaoyangchun.tonguepicture.R
 
 open abstract class BaseActivity : AppCompatActivity() {
     private var views = SparseArray<View>()

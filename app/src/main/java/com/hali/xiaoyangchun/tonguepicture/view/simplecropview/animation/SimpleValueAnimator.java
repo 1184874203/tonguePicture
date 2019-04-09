@@ -1,11 +1,12 @@
 package com.hali.xiaoyangchun.tonguepicture.view.simplecropview.animation;
 
-@SuppressWarnings("unused") public interface SimpleValueAnimator {
-  void startAnimation(long duration);
+@SuppressWarnings("unused")
+public interface SimpleValueAnimator {
+    void startAnimation(long duration);
 
-  void cancelAnimation();
+    void cancelAnimation();
 
-  boolean isAnimationStarted();
+    boolean isAnimationStarted();
 
-  void addAnimatorListener(SimpleValueAnimatorListener animatorListener);
+    void addAnimatorListener(SimpleValueAnimatorListener animatorListener);
 }

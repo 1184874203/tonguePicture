@@ -2,7 +2,6 @@ package com.hali.xiaoyangchun.tonguepicture.ui.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import com.hali.xiaoyangchun.tonguepicture.ui.fragment.CameraFragment
 import com.hali.xiaoyangchun.tonguepicture.ui.fragment.TonguePicCommitFragment

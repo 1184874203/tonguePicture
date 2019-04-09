@@ -40,27 +40,6 @@ import static android.graphics.Bitmap.createBitmap;
   public static int sInputImageWidth = 0;
   public static int sInputImageHeight = 0;
 
-  /**
-   * Copy EXIF info to new file
-   *
-   * =========================================
-   *
-   * NOTE: PNG cannot not have EXIF info.
-   *
-   * source: JPEG, save: JPEG
-   * copies all EXIF data
-   *
-   * source: JPEG, save: PNG
-   * saves no EXIF data
-   *
-   * source: PNG, save: JPEG
-   * saves only width and height EXIF data
-   *
-   * source: PNG, save: PNG
-   * saves no EXIF data
-   *
-   * =========================================
-   */
   public static void copyExifInfo(Context context, Uri sourceUri, Uri saveUri, int outputWidth,
       int outputHeight) {
     if (sourceUri == null || saveUri == null) return;
@@ -93,18 +72,16 @@ import static android.graphics.Bitmap.createBitmap;
 
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
         tags.add(ExifInterface.TAG_EXPOSURE_TIME);
-        //noinspection deprecation
-        tags.add(ExifInterface.TAG_APERTURE);
-        //noinspection deprecation
-        tags.add(ExifInterface.TAG_ISO);
+
+          tags.add(ExifInterface.TAG_APERTURE);
+
+          tags.add(ExifInterface.TAG_ISO);
       }
 
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         tags.add(ExifInterface.TAG_DATETIME_DIGITIZED);
         tags.add(ExifInterface.TAG_SUBSEC_TIME);
-        //noinspection deprecation
         tags.add(ExifInterface.TAG_SUBSEC_TIME_DIG);
-        //noinspection deprecation
         tags.add(ExifInterface.TAG_SUBSEC_TIME_ORIG);
       }
 
@@ -279,9 +256,6 @@ import static android.graphics.Bitmap.createBitmap;
       // DownloadsProvider
       else if (isDownloadsDocument(uri)) {
         final String id = DocumentsContract.getDocumentId(uri);
-        // String "id" may not represent a valid Long type data, it may equals to
-        // something like "raw:/storage/emulated/0/Download/some_file" instead.
-        // Doing a check before passing the "id" to Long.valueOf(String) would be much safer.
         if (RawDocumentsHelper.isRawDocId(id)) {
           filePath = RawDocumentsHelper.getAbsoluteFilePath(id);
         } else {

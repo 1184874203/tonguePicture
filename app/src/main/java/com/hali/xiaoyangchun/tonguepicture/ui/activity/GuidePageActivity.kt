@@ -18,7 +18,7 @@ class GuidePageActivity : BaseActivity(), ViewPager.OnPageChangeListener, View.O
         when (v.id) {
             R.id.btn_guide_start -> {
                 PreferenceManager.getInstance(this).setUserFirstInited()
-                var intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             }
@@ -57,7 +57,7 @@ class GuidePageActivity : BaseActivity(), ViewPager.OnPageChangeListener, View.O
         vp = findView(R.id.vp_guide)
         imageIdArray = arrayOf(R.drawable.guide_one, R.drawable.guide_two, R.drawable.guide_three)
         viewList = ArrayList()
-        var params = LinearLayout
+        val params = LinearLayout
                 .LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
         for (i in 0 until imageIdArray.size) {
             var imageView = ImageView(this)
