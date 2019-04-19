@@ -1,19 +1,18 @@
 package com.hali.xiaoyangchun.tonguepicture.ui.fragment
 
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
+import android.app.Dialog
+import android.util.Log
+import android.widget.*
 import com.bumptech.glide.Glide
 import com.hali.xiaoyangchun.tonguepicture.R
-import com.hali.xiaoyangchun.tonguepicture.bean.ImageUploadBean
 import com.hali.xiaoyangchun.tonguepicture.bean.User
 import com.hali.xiaoyangchun.tonguepicture.dao.Manager.ManagerFactory
-import com.hali.xiaoyangchun.tonguepicture.ui.base.BaseFragment
 import com.hali.xiaoyangchun.tonguepicture.dao.Manager.PreferenceManager
 import com.hali.xiaoyangchun.tonguepicture.listener.ChangeListenerManager
 import com.hali.xiaoyangchun.tonguepicture.model.net.CommonRequest
 import com.hali.xiaoyangchun.tonguepicture.model.net.RequestConstant
 import com.hali.xiaoyangchun.tonguepicture.model.net.interfaces.OkGoInterface
+import com.hali.xiaoyangchun.tonguepicture.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_tonguepic_commit.*
 import java.io.File
 
@@ -32,6 +31,8 @@ class TonguePicCommitFragment : BaseFragment(), OkGoInterface {
 
     private lateinit var preferenceManager: PreferenceManager
 
+    protected lateinit var progressDialog: Dialog
+
     private lateinit var file: File
 
     override fun getLayoutId() = R.layout.fragment_tonguepic_commit
@@ -43,37 +44,50 @@ class TonguePicCommitFragment : BaseFragment(), OkGoInterface {
         edt_sex = findView(R.id.edit_sex)
         edt_otherString = findView(R.id.edit_otherString)
         iv_tonguePic = findView(R.id.tonguePic)
-        btn_commit.setOnClickListener({
+        btn_commit.setOnClickListener {
             saveInfo()
             upLoadImage(file)
-        })
+        }
     }
 
     override fun onSuccess(response: Any?, requestCode: Int) {
         if (response == null) return
         when (requestCode) {
             RequestConstant.REQUESTCODE_UPLOADIMAGE -> {
-                if (response is ImageUploadBean) {
-                    var user = getEditUser()
-                    user.picPath = response.url
-                    CommonRequest.postTongueInfo(user, this)
-                }
+                CommonRequest.getTongueDetial(activity!!, response.toString(), this)
+                hideProgressDialog()
             }
-            RequestConstant.REQUESTCODE_POST_TONGUEINFO -> {
-                saveDB({
+            RequestConstant.REQUESTCODE_TONGUEPICTURE_DETIAL -> {
+                Log.i(CommonRequest.TAG, "诊断结果：${response.toString()}")
+                saveDB {
                     ChangeListenerManager.getInstance()
                             .notifyDataChanged(ChangeListenerManager.CHANGELISTENERMANAGER_DB_INSERT, it)
-                })
-                activity?.finish()
+                }
             }
         }
     }
 
     override fun onError(error: String) {
+        Toast.makeText(activity!!, "上传失败", Toast.LENGTH_SHORT).show()
+        hideProgressDialog()
+    }
 
+    fun showProgressDialog() {
+        progressDialog.setContentView(R.layout.dialog_progress_layout)
+        progressDialog.setCancelable(false)
+        progressDialog.findViewById<TextView>(R.id.tv_progressmsg).setText("上传中")
+        progressDialog.window.setBackgroundDrawableResource(android.R.color.transparent)
+        progressDialog.show()
+    }
+
+    fun hideProgressDialog() {
+        if (progressDialog.isShowing) {
+            progressDialog.dismiss()
+        }
     }
 
     override fun initData() {
+        progressDialog = Dialog(activity, R.style.progress_dialog)
         preferenceManager = PreferenceManager.getInstance(activity!!)
         setText(preferenceManager.getLastUserName(), edt_name)
         setText(preferenceManager.getLastUserAge(), edt_age)
@@ -119,7 +133,8 @@ class TonguePicCommitFragment : BaseFragment(), OkGoInterface {
         }
     }
 
-    private fun upLoadImage(file : File) {
-        CommonRequest.uploadImage(this, file)
+    private fun upLoadImage(file: File) {
+        CommonRequest.upLoadImage(context!!, null, file, this)
+        showProgressDialog()
     }
 }

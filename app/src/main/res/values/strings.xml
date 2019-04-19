@@ -1,3 +1,20 @@
 <resources>
-    <string name="app_name">tonguePicture</string>
+    <string name="app_name">舌象档案</string>
+    <string name="my_note">舌象档案</string>
+    <string name="my_commit">我的提交</string>
+    <string name="my_file">我的档案</string>
+    <string name="how_to_use">使用说明</string>
+    <string name="tab_home">首页</string>
+    <string name="tab_video">视频</string>
+    <string name="tab_micro">微头条</string>
+    <string name="tab_me">我的</string>
+    <string name="result">"瘦薄舌","心脾两虚,阴虚火旺"
+"红舌","阴虚","灰黑苔","无"
+"嫩舌","虚寒证，慢性病后期"</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">设置</string>
+    <string name="nav_header_title">张晨昊</string>
+    <string name="nav_header_subtitle">1234567890@163.com</string>
+    <string name="nav_header_desc">Navigation header</string>
 </resources>

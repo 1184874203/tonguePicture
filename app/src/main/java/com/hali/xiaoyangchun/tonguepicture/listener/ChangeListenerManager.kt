@@ -1,8 +1,11 @@
 package com.hali.xiaoyangchun.tonguepicture.listener
 
+import android.os.Handler
+import android.os.Looper
+
 class ChangeListenerManager {
     private var listenerMap = HashMap<String, ArrayList<ChangeListenr>>()
-
+    private val handler = Handler(Looper.getMainLooper())
     companion object {
         private val TAG = "ChangeListenerManager"
 
@@ -45,7 +48,9 @@ class ChangeListenerManager {
         var list = listenerMap.get(key)
         if (list != null) {
             for (listener in list) {
-                listener.onChange(key, data)
+                handler.post {
+                    listener.onChange(key, data)
+                }
             }
         }
     }

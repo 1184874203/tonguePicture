@@ -13,6 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="32px"
-        app:srcCompat="@android:drawable/ic_input_add"
+        app:srcCompat="@drawable/ic_camera"
         />
 </android.support.design.widget.CoordinatorLayout>

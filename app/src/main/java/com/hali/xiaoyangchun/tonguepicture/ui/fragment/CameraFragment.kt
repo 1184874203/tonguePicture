@@ -16,6 +16,7 @@ import com.hali.xiaoyangchun.tonguepicture.utils.FileUtil
 import com.hali.xiaoyangchun.tonguepicture.view.simplecropview.CropImageView
 import com.hali.xiaoyangchun.tonguepicture.view.simplecropview.callback.CropCallback
 
+
 class CameraFragment : BaseFragment(), CameraAction, CropCallback {
 
     companion object {
@@ -84,6 +85,7 @@ class CameraFragment : BaseFragment(), CameraAction, CropCallback {
     override fun onSuccess(cropped: Bitmap?) {
         FileUtil.saveFile(cropped!!, imagePath!!) {
             SingleFAHelper.gotoTonguePicCommitFragment(activity!!, imagePath!!)
+            activity!!.finish()
         }
     }
 

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright (C) 2016 The Android Open Source Project
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -17,83 +16,148 @@
           Set this to true if you want the CameraView to adjust its bounds to preserve the aspect
           ratio of its camera preview.
         -->
-        <attr name="android:adjustViewBounds"/>
+        <attr name="android:adjustViewBounds" />
         <!-- Direction the camera faces relative to device screen. -->
         <attr name="facing" format="enum">
             <!-- The camera device faces the opposite direction as the device's screen. -->
-            <enum name="back" value="0"/>
+            <enum name="back" value="0" />
             <!-- The camera device faces the same direction as the device's screen. -->
-            <enum name="front" value="1"/>
+            <enum name="front" value="1" />
         </attr>
         <!-- Aspect ratio of camera preview and pictures. -->
-        <attr name="aspectRatio" format="string"/>
+        <attr name="aspectRatio" format="string" />
         <!-- Continuous auto focus mode. -->
-        <attr name="autoFocus" format="boolean"/>
+        <attr name="autoFocus" format="boolean" />
         <!-- The flash mode. -->
         <attr name="flash" format="enum">
             <!-- Flash will not be fired. -->
-            <enum name="off" value="0"/>
+            <enum name="off" value="0" />
             <!--
               Flash will always be fired during snapshot.
               The flash may also be fired during preview or auto-focus depending on the driver.
             -->
-            <enum name="on" value="1"/>
+            <enum name="on" value="1" />
             <!--
               Constant emission of light during preview, auto-focus and snapshot.
               This can also be used for video recording.
             -->
-            <enum name="torch" value="2"/>
+            <enum name="torch" value="2" />
             <!--
               Flash will be fired automatically when required.
               The flash may be fired during preview, auto-focus, or snapshot depending on the
               driver.
             -->
-            <enum name="auto" value="3"/>
+            <enum name="auto" value="3" />
             <!--
               Flash will be fired in red-eye reduction mode.
             -->
-            <enum name="redEye" value="4"/>
+            <enum name="redEye" value="4" />
         </attr>
     </declare-styleable>
 
     <declare-styleable name="scv_CropImageView">
-        <attr format="reference" name="scv_img_src"/>
+        <attr name="scv_img_src" format="reference" />
         <attr name="scv_crop_mode">
-            <enum name="fit_image" value="0"/>
-            <enum name="ratio_4_3" value="1"/>
-            <enum name="ratio_3_4" value="2"/>
-            <enum name="square" value="3"/>
-            <enum name="ratio_16_9" value="4"/>
-            <enum name="ratio_9_16" value="5"/>
-            <enum name="free" value="6"/>
-            <enum name="custom" value="7"/>
-            <enum name="circle" value="8"/>
-            <enum name="circle_square" value="9"/>
+            <enum name="fit_image" value="0" />
+            <enum name="ratio_4_3" value="1" />
+            <enum name="ratio_3_4" value="2" />
+            <enum name="square" value="3" />
+            <enum name="ratio_16_9" value="4" />
+            <enum name="ratio_9_16" value="5" />
+            <enum name="free" value="6" />
+            <enum name="custom" value="7" />
+            <enum name="circle" value="8" />
+            <enum name="circle_square" value="9" />
         </attr>
-        <attr format="reference|color" name="scv_background_color"/>
-        <attr format="reference|color" name="scv_overlay_color"/>
-        <attr format="reference|color" name="scv_frame_color"/>
-        <attr format="reference|color" name="scv_handle_color"/>
-        <attr format="reference|color" name="scv_guide_color"/>
+        <attr name="scv_background_color" format="reference|color" />
+        <attr name="scv_overlay_color" format="reference|color" />
+        <attr name="scv_frame_color" format="reference|color" />
+        <attr name="scv_handle_color" format="reference|color" />
+        <attr name="scv_guide_color" format="reference|color" />
         <attr name="scv_guide_show_mode">
-            <enum name="show_always" value="1"/>
-            <enum name="show_on_touch" value="2"/>
-            <enum name="not_show" value="3"/>
+            <enum name="show_always" value="1" />
+            <enum name="show_on_touch" value="2" />
+            <enum name="not_show" value="3" />
         </attr>
         <attr name="scv_handle_show_mode">
-            <enum name="show_always" value="1"/>
-            <enum name="show_on_touch" value="2"/>
-            <enum name="not_show" value="3"/>
+            <enum name="show_always" value="1" />
+            <enum name="show_on_touch" value="2" />
+            <enum name="not_show" value="3" />
         </attr>
-        <attr format="dimension" name="scv_handle_size"/>
-        <attr format="dimension" name="scv_touch_padding"/>
-        <attr format="dimension" name="scv_min_frame_size"/>
-        <attr format="dimension" name="scv_frame_stroke_weight"/>
-        <attr format="dimension" name="scv_guide_stroke_weight"/>
-        <attr format="boolean" name="scv_crop_enabled"/>
-        <attr format="float" name="scv_initial_frame_scale"/>
-        <attr format="boolean" name="scv_animation_enabled"/>
-        <attr format="integer" name="scv_animation_duration"/>
-        <attr format="boolean" name="scv_handle_shadow_enabled"/>
+        <attr name="scv_handle_size" format="dimension" />
+        <attr name="scv_touch_padding" format="dimension" />
+        <attr name="scv_min_frame_size" format="dimension" />
+        <attr name="scv_frame_stroke_weight" format="dimension" />
+        <attr name="scv_guide_stroke_weight" format="dimension" />
+        <attr name="scv_crop_enabled" format="boolean" />
+        <attr name="scv_initial_frame_scale" format="float" />
+        <attr name="scv_animation_enabled" format="boolean" />
+        <attr name="scv_animation_duration" format="integer" />
+        <attr name="scv_handle_shadow_enabled" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="BottomBarItem">
+        <!--默认状态下的图标-->
+        <attr name="iconNormal" format="reference" />
+        <!--选中状态下的图标-->
+        <attr name="iconSelected" format="reference" />
+
+        <!--底部文字-->
+        <attr name="itemText" format="string" />
+        <!--文字大小-->
+        <attr name="itemTextSize" format="dimension" />
+        <!--默认状态下的文字颜色-->
+        <attr name="textColorNormal" format="color" />
+        <!--选中状态下的文字颜色-->
+        <attr name="textColorSelected" format="color" />
+
+        <!--文字和图标的顶部距离-->
+        <attr name="itemMarginTop" format="dimension" />
+
+        <!--是否开启触摸背景效果-->
+        <attr name="openTouchBg" format="boolean" />
+        <!--设置触摸背景-->
+        <attr name="touchDrawable" format="reference" />
+
+        <!--设置图标的宽度-->
+        <attr name="iconWidth" format="dimension" />
+        <!--设置图标的高度-->
+        <attr name="iconHeight" format="dimension" />
+
+        <!--设置BottomBarItem的padding-->
+        <attr name="itemPadding" format="dimension" />
+
+        <!--设置未读数字体大小-->
+        <attr name="unreadTextSize" format="dimension" />
+        <!--设置未读数字体颜色-->
+        <attr name="unreadTextColor" format="reference" />
+        <!--设置未读数背景色-->
+        <attr name="unreadTextBg" format="reference" />
+
+        <!--设置提示消息字体大小-->
+        <attr name="msgTextSize" format="dimension" />
+        <!--设置提示消息字体颜色-->
+        <attr name="msgTextColor" format="reference" />
+        <!--设置提示消息背景-->
+        <attr name="msgTextBg" format="reference" />
+
+        <!--设置提示点背景-->
+        <attr name="notifyPointBg" format="reference" />
+
+        <!--设置未读数组阈值 大于阈值的数字将显示为 n+ n为设置的阈值-->
+        <attr name="unreadThreshold" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="BottomBarLayout">
+        <attr name="smoothScroll" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="SettingItem">
+        <attr name="title" />
+        <attr name="additionHint" format="string" />
+        <attr name="itemIcon" format="reference" />
+        <attr name="showAddition" format="boolean" />
+        <attr name="showArrow" format="boolean" />
+        <attr name="titleStyle" format="reference" />
     </declare-styleable>
 </resources>

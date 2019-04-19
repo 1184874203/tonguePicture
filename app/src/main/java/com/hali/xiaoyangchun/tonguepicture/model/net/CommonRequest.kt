@@ -1,15 +1,17 @@
 package com.hali.xiaoyangchun.tonguepicture.model.net
 
-import com.hali.xiaoyangchun.tonguepicture.bean.ImageUploadBean
-import com.hali.xiaoyangchun.tonguepicture.bean.User
-import com.hali.xiaoyangchun.tonguepicture.model.net.callback.JsonCallback
+import android.content.Context
+import android.util.Log
 import com.hali.xiaoyangchun.tonguepicture.model.net.interfaces.OkGoInterface
-import com.lzy.okgo.OkGo
 import com.lzy.okgo.model.Response
+import okhttp3.*
 import java.io.File
+import java.io.IOException
+import java.util.concurrent.TimeUnit
 
 object CommonRequest {
 
+    val TAG = "CommonRequest"
     private val POST_UPLOAD_FILE = "file"
     private val POST_JSON = "jsonString"
     private val GET_DETIAL_BYID = "id"
@@ -23,48 +25,69 @@ object CommonRequest {
         return null
     }
 
-    fun uploadImage(callback: OkGoInterface, file: File) {
-        OkGo.post<MainResult<ImageUploadBean>>(RequestConstant.REQUEST_URL_UPLOADIMAGE)
-                .params(POST_UPLOAD_FILE, file)
-                .execute(object : JsonCallback<MainResult<ImageUploadBean>>() {
-                    override fun onSuccess(response: Response<MainResult<ImageUploadBean>>) {
-                        callback.onSuccess(checkData(response), RequestConstant.REQUESTCODE_UPLOADIMAGE)
+    fun getTongueDetial(context: Context, id: String, callback: OkGoInterface?) {
+        val client = OkHttpClient()
+        val requestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+        requestBody.addFormDataPart(POST_UPLOAD_FILE, id)
+        val request = Request.Builder()
+                .url(RequestConstant.REQUEST_URL_TONGUEPICTURE_DETIAL)
+                .post(requestBody.build()).tag(context).build()
+        client.newBuilder()
+                .readTimeout(20000, TimeUnit.MILLISECONDS)
+                .build().newCall(request).enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        Log.i(TAG, "onFailure")
+                        callback?.onError("onFailure")
                     }
 
-                    override fun onError(response: Response<MainResult<ImageUploadBean>>?) {
-                        super.onError(response)
-                        callback.onError(response.toString())
+                    @Throws(IOException::class)
+                    override fun onResponse(call: Call, response: okhttp3.Response) {
+                        if (response.isSuccessful) {
+                            val str = response.body()!!.string()
+                            callback?.onSuccess(str, RequestConstant.REQUESTCODE_TONGUEPICTURE_DETIAL)
+                            Log.i(TAG, "body: $str")
+                        } else {
+                            Log.i(TAG, response.message() + " error : body " + response.body()!!.string())
+                        }
                     }
                 })
+
     }
 
-    fun postTongueInfo(user: User, callback: OkGoInterface) {
-        OkGo.post<MainResult<Void>>(RequestConstant.REQUEST_URL_POST_tONGUEINFO)
-                .params(POST_JSON, JsonCreater.toJson(user))
-                .execute(object : JsonCallback<MainResult<Void>>() {
-                    override fun onSuccess(response: Response<MainResult<Void>>) {
-                        callback.onSuccess(checkData(response), RequestConstant.REQUESTCODE_POST_TONGUEINFO)
+    fun upLoadImage(context: Context, map: Map<String, Any>?, file: File?, callback: OkGoInterface?) {
+        val client = OkHttpClient()
+        val requestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+        if (file != null) {
+            val body = RequestBody.create(MediaType.parse("image/*"), file)
+            requestBody.addFormDataPart(POST_UPLOAD_FILE, file.name, body)
+        }
+        if (map != null) {
+            for ((key, value) in map) {
+                requestBody.addFormDataPart(key, value.toString())
+            }
+        }
+        val request = Request.Builder()
+                .url(RequestConstant.REQUEST_URL_UPLOADIMAGE)
+                .post(requestBody.build()).tag(context).build()
+        client.newBuilder()
+                .readTimeout(20000, TimeUnit.MILLISECONDS)
+                .build().newCall(request).enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        Log.i(TAG, "onFailure")
+                        callback?.onError("onFailure")
                     }
 
-                    override fun onError(response: Response<MainResult<Void>>?) {
-                        super.onError(response)
-                        callback.onError(response.toString())
+                    @Throws(IOException::class)
+                    override fun onResponse(call: Call, response: okhttp3.Response) {
+                        if (response.isSuccessful) {
+                            val str = response.body()!!.string()
+                            callback?.onSuccess(str, RequestConstant.REQUESTCODE_UPLOADIMAGE)
+                            Log.i(TAG, "body: $str")
+                        } else {
+                            Log.i(TAG, response.message() + " error : body " + response.body()!!.string())
+                        }
                     }
                 })
-    }
 
-    fun getTongueDetial(id: String, callback: OkGoInterface) {
-        OkGo.get<MainResult<User>>(RequestConstant.REQUEST_URL_TONGUEPICTURE_DETIAL)
-                .params(GET_DETIAL_BYID, id)
-                .execute(object : JsonCallback<MainResult<User>>() {
-                    override fun onSuccess(response: Response<MainResult<User>>) {
-                        callback.onSuccess(checkData(response), RequestConstant.REQUESTCODE_TONGUEPICTURE_DETIAL)
-                    }
-
-                    override fun onError(response: Response<MainResult<User>>?) {
-                        super.onError(response)
-                        callback.onError(response.toString())
-                    }
-                })
     }
 }

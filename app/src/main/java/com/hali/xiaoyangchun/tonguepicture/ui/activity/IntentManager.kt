@@ -32,7 +32,6 @@ object SingleFAHelper {
         var intent = Intent(activity, SingleFragmentActivity::class.java)
         intent.putExtra(SingleFragmentActivity.TITLE, "诊断详情")
         intent.putExtra(SingleFragmentActivity.TAG, TonguePicDetailFragment.TonguePicDetailFragment_TAG)
-        intent.putExtra(SingleFragmentActivity.FULLSCREEN, true)
         activity.startActivity(intent)
     }
 }

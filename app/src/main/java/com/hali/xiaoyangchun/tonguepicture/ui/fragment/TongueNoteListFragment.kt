@@ -1,7 +1,6 @@
 package com.hali.xiaoyangchun.tonguepicture.ui.fragment
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -30,9 +29,9 @@ class TongueNoteListFragment : BaseFragment(), ChangeListenr {
     }
 
     override fun initData() {
-        fab.setOnClickListener({
+        fab.setOnClickListener {
             SingleFAHelper.gotoCameraFragment(activity!!)
-        })
+        }
         var layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rv_list.layoutManager = layoutManager
@@ -43,7 +42,7 @@ class TongueNoteListFragment : BaseFragment(), ChangeListenr {
     }
 
     fun initListener() {
-        adapter.itemClickListener = object : TongNoteListAdapter.ItemClickListener{
+        adapter.itemClickListener = object : TongNoteListAdapter.ItemClickListener {
             override fun onItemClick(view: View, user: User) {
                 SingleFAHelper.gotoTonguePicDetailFragment(activity!!)
             }
@@ -55,11 +54,11 @@ class TongueNoteListFragment : BaseFragment(), ChangeListenr {
                 builder.setTitle("提示")
                 builder.setMessage("确定删除该条记录？")
                 builder.setCancelable(false)
-                builder.setPositiveButton("确定", {dialog, which ->
+                builder.setPositiveButton("确定") { dialog, which ->
                     ManagerFactory.getInstance(activity!!).getUserManager().delete(user)
                     dataList.remove(user)
                     adapter?.notifyDataSetChanged()
-                })
+                }
                 builder.setNegativeButton("取消", null)
                 builder.create().show()
             }
