@@ -3,9 +3,10 @@ package com.hali.xiaoyangchun.tonguepicture.ui.fragment
 import android.widget.ImageView
 import android.widget.TextView
 import com.hali.xiaoyangchun.tonguepicture.R
+import com.hali.xiaoyangchun.tonguepicture.model.net.CommonRequest
 import com.hali.xiaoyangchun.tonguepicture.ui.base.BaseRequestFragment
 
-class TonguePicDetailFragment : BaseRequestFragment() {
+class TonguePicDetailFragment : BaseRequestFragment(){
     override var TAG = "TonguePicDetailFragment"
 
     private lateinit var tongueImg: ImageView
@@ -30,7 +31,6 @@ class TonguePicDetailFragment : BaseRequestFragment() {
         tongueImg = findView(R.id.iv_tongue)
         name = findView(R.id.tv_name)
         time = findView(R.id.tv_time)
-        otherString = findView(R.id.tv_otherString)
         k1 = findView(R.id.tv_p1_k)
         k2 = findView(R.id.tv_p2_k)
         k3 = findView(R.id.tv_p3_k)
@@ -39,13 +39,22 @@ class TonguePicDetailFragment : BaseRequestFragment() {
         v2 = findView(R.id.tv_p2_v)
         v3 = findView(R.id.tv_p3_v)
         v4 = findView(R.id.tv_p4_v)
+        otherString = findView(R.id.tv_otherString)
     }
 
     override fun initData() {
-
+        val picPath = mActivity.intent.getStringExtra("picPath")
+        CommonRequest.getTongueDetial(mActivity, picPath, this)
     }
 
     override fun getRequestUrl(): String {
         return ""
+    }
+
+    override fun onSuccess(response: Any?, requestCode: Int) {
+    }
+
+    override fun onError(error: String) {
+
     }
 }

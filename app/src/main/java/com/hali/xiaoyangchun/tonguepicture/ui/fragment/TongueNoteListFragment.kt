@@ -1,5 +1,6 @@
 package com.hali.xiaoyangchun.tonguepicture.ui.fragment
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.LinearLayoutManager
@@ -13,6 +14,8 @@ import com.hali.xiaoyangchun.tonguepicture.listener.ChangeListenr
 import com.hali.xiaoyangchun.tonguepicture.ui.activity.SingleFAHelper
 import com.hali.xiaoyangchun.tonguepicture.ui.adapter.TongNoteListAdapter
 import com.hali.xiaoyangchun.tonguepicture.ui.base.BaseFragment
+import com.tonguePicture.support.Permission.PermissionHelper
+import com.tonguePicture.support.Permission.PermissionRequestListener
 
 class TongueNoteListFragment : BaseFragment(), ChangeListenr {
     private lateinit var rv_list: RecyclerView
@@ -30,7 +33,20 @@ class TongueNoteListFragment : BaseFragment(), ChangeListenr {
 
     override fun initData() {
         fab.setOnClickListener {
-            SingleFAHelper.gotoCameraFragment(activity!!)
+            if (PermissionHelper.hasCameraPermissions(mActivity)) {
+                SingleFAHelper.gotoCameraFragment(activity!!)
+            } else {
+                PermissionHelper.requestCameraPermission(mActivity, object : PermissionRequestListener{
+                    override fun onGranted(context: Activity?, requestCode: Int) {
+                        SingleFAHelper.gotoCameraFragment(activity!!)
+                    }
+
+                    override fun onAsked(context: Activity?, requestCode: Int) {}
+
+                    override fun onDenied(context: Activity?, requestCode: Int) {}
+
+                })
+            }
         }
         var layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -44,7 +60,7 @@ class TongueNoteListFragment : BaseFragment(), ChangeListenr {
     fun initListener() {
         adapter.itemClickListener = object : TongNoteListAdapter.ItemClickListener {
             override fun onItemClick(view: View, user: User) {
-                SingleFAHelper.gotoTonguePicDetailFragment(activity!!)
+                SingleFAHelper.gotoTonguePicDetailFragment(activity!!, user.picPath)
             }
         }
 

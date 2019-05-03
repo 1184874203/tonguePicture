@@ -38,6 +38,12 @@ class PreferenceManager(private var context: Context) {
         editor.apply()
     }
 
+    fun putString(key: String, value: String) =
+            apply {
+                editor.putString(key, value)
+            }
+
+
     fun setLastUserName(name: String) =
             apply {
                 editor.putString(SHARED_KEY_LAST_USER_NAME, name)
@@ -72,4 +78,6 @@ class PreferenceManager(private var context: Context) {
     fun getLastUserSex() = mSharedPreferences.getString(SHARED_KEY_LAST_USER_SEX, "")
 
     fun getLastUserOtherString() = mSharedPreferences.getString(SHARED_KEY_LAST_USER_OTHERSTRING, "")
+
+    fun getString(key: String) = mSharedPreferences.getString(key, "")
 }

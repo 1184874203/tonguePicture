@@ -1,0 +1,9 @@
+<resources>
+
+    <style name="TransparentTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:opacity">opaque</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+</resources>

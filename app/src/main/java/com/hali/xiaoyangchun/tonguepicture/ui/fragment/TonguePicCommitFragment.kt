@@ -1,6 +1,7 @@
 package com.hali.xiaoyangchun.tonguepicture.ui.fragment
 
 import android.app.Dialog
+import android.text.TextUtils
 import android.util.Log
 import android.widget.*
 import com.bumptech.glide.Glide
@@ -35,6 +36,8 @@ class TonguePicCommitFragment : BaseFragment(), OkGoInterface {
 
     private lateinit var file: File
 
+    private var upLoadImgUrl = ""
+
     override fun getLayoutId() = R.layout.fragment_tonguepic_commit
 
     override fun initViews() {
@@ -54,11 +57,17 @@ class TonguePicCommitFragment : BaseFragment(), OkGoInterface {
         if (response == null) return
         when (requestCode) {
             RequestConstant.REQUESTCODE_UPLOADIMAGE -> {
-                CommonRequest.getTongueDetial(activity!!, response.toString(), this)
-                hideProgressDialog()
+                upLoadImgUrl = response.toString()
+                if (!TextUtils.isEmpty(upLoadImgUrl)) {
+                    CommonRequest.getTongueDetial(activity!!, response.toString(), this)
+                } else {
+                    Toast.makeText(activity!!, "图片上传失败!", Toast.LENGTH_SHORT).show()
+                    hideProgressDialog()
+                }
             }
             RequestConstant.REQUESTCODE_TONGUEPICTURE_DETIAL -> {
                 Log.i(CommonRequest.TAG, "诊断结果：${response.toString()}")
+                hideProgressDialog()
                 saveDB {
                     ChangeListenerManager.getInstance()
                             .notifyDataChanged(ChangeListenerManager.CHANGELISTENERMANAGER_DB_INSERT, it)
@@ -105,6 +114,7 @@ class TonguePicCommitFragment : BaseFragment(), OkGoInterface {
 
     private fun saveDB(action: (user: User) -> Unit) {
         var user = getEditUser()
+        user.picPath = upLoadImgUrl
         ManagerFactory.getInstance(activity!!).getUserManager().save(user)
         action(user)
     }

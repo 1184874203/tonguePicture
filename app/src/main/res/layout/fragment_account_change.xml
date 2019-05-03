@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/et_name_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:hint="请输入昵称"
+            android:maxLength="14"
+            android:lines="1"
+            android:inputType="text" />
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginTop="5dp"
+        android:background="#FFE0E0E0" />
+
+    <TextView
+        android:id="@+id/tv_name_input_bottom_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="不超过10个字符"
+        android:textColor="@color/tab_selected_color"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btn_ok"
+        android:text="确定"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:layout_margin="20dp"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+</LinearLayout>

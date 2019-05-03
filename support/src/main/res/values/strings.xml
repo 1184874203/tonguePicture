@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">support</string>
+    <string name="permission_explainDesc">此功能需要开启权限才可使用~</string>
+    <string name="permission_settingDesc">此功能需要开启权限才可使用, 请去设置中开启</string>
+    <string name="permission_record_explainDesc">此功能需要开启录音权限才可使用~</string>
+    <string name="permission_record_settingDesc">此功能需要开启录音权限才可使用, 请去设置中开启</string>
+    <string name="permission_location_explainDesc">此功能需要开启定位权限才可使用~</string>
+    <string name="permission_location_settingDesc">此功能需要开启定位权限才可使用, 请去设置中开启</string>
+    <string name="permission_phone_explainDesc">需要开启电话权限才可使用~</string>
+    <string name="permission_phone_settingDesc">需要开启电话权限才可使用, 请去设置中开启</string>
+    <string name="permission_storage_explainDesc">需要开启存储权限才可使用~</string>
+    <string name="permission_storage_settingDesc">需要开启存储权限才可使用, 请去设置中开启</string>
+    <string name="permission_camera_explainDesc">此功能需要开启相机权限才可使用~</string>
+    <string name="permission_camera_settingDesc">此功能需要开启相机权限才可使用, 请去设置中开启</string>
+    <string name="permission_negative">暂不</string>
+    <string name="permission_positive">去开启</string>
+    <string name="permission_open_action">无法打开应用详情，请手动开启权限~</string>
+</resources>

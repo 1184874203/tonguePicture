@@ -15,6 +15,9 @@ object FragmentFactory {
             TonguePicDetailFragment.TonguePicDetailFragment_TAG -> {
                 return createTonguePicDetailFragment(bundle)
             }
+            NickChangeFragment.NICKCHANGEFRAGMENT_TAG -> {
+                return createNickChangeFragment(bundle)
+            }
         }
         return null
     }
@@ -35,6 +38,13 @@ object FragmentFactory {
 
     fun createTonguePicDetailFragment(bundle: Bundle): BaseFragment? {
         var fragment = TonguePicDetailFragment()
+        if (bundle != null)
+            fragment.arguments = bundle
+        return fragment
+    }
+
+    fun createNickChangeFragment(bundle: Bundle): BaseFragment? {
+        var fragment = NickChangeFragment()
         if (bundle != null)
             fragment.arguments = bundle
         return fragment

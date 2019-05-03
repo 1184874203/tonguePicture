@@ -80,6 +80,7 @@ class CameraFragment : BaseFragment(), CameraAction, CropCallback {
             cropImgPresenter.loadImage(it)
             mCropImageView.visibility = View.VISIBLE
         }
+        findView<ImageButton>(R.id.buttonDone).visibility = View.VISIBLE
     }
 
     override fun onSuccess(cropped: Bitmap?) {
