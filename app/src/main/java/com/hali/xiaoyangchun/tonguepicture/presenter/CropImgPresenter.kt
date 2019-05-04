@@ -43,6 +43,14 @@ class CropImgPresenter(private var mContext: Activity) {
                 .execute(loadCallback)
     }
 
+    fun loadImage(uri: Uri) {
+        mSourceUri = uri
+        mCropView!!.load(mSourceUri)
+                .initialFrameRect(mFrameRect)
+                .useThumbnail(true)
+                .execute(loadCallback)
+    }
+
     private fun createTempUri(file: File): Uri {
         return Uri.fromFile(file)
     }

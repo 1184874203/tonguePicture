@@ -1,7 +1,10 @@
 package com.hali.xiaoyangchun.tonguepicture.ui.fragment
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.support.design.widget.FloatingActionButton
 import android.view.View
 import android.widget.ImageButton
@@ -31,6 +34,8 @@ class CameraFragment : BaseFragment(), CameraAction, CropCallback {
 
     private var imagePath: String? = null
 
+    private val REQUEST_CODE_PICK = 0x0001
+
     override fun getLayoutId() = R.layout.fragment_camera
 
     override fun initViews() {
@@ -49,6 +54,10 @@ class CameraFragment : BaseFragment(), CameraAction, CropCallback {
         }
         findView<ImageButton>(R.id.buttonDone).setOnClickListener {
             cropImgPresenter.cropImage()
+        }
+        findView<ImageButton>(R.id.buttonPickImage).setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(Intent.createChooser(intent, "请选择图片"), REQUEST_CODE_PICK)
         }
     }
 
@@ -81,6 +90,16 @@ class CameraFragment : BaseFragment(), CameraAction, CropCallback {
             mCropImageView.visibility = View.VISIBLE
         }
         findView<ImageButton>(R.id.buttonDone).visibility = View.VISIBLE
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_PICK) {
+            val uri = data?.data
+            cropImgPresenter.loadImage(uri!!)
+            mCropImageView.visibility = View.VISIBLE
+            findView<ImageButton>(R.id.buttonDone).visibility = View.VISIBLE
+            imagePath = FileUtil.getRealFilePathFromUri(mActivity, uri)
+        }
     }
 
     override fun onSuccess(cropped: Bitmap?) {
