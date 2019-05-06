@@ -60,7 +60,7 @@ class TongueNoteListFragment : BaseFragment(), ChangeListenr {
     fun initListener() {
         adapter.itemClickListener = object : TongNoteListAdapter.ItemClickListener {
             override fun onItemClick(view: View, user: User) {
-                SingleFAHelper.gotoTonguePicDetailFragment(activity!!, user.picPath)
+                SingleFAHelper.gotoTonguePicDetailFragment(activity!!, user)
             }
         }
 

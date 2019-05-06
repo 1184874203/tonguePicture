@@ -4,19 +4,21 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.hali.xiaoyangchun.tonguepicture.R;
 import com.hali.xiaoyangchun.tonguepicture.bean.TongueResult;
+import com.hali.xiaoyangchun.tonguepicture.bean.User;
 import com.hali.xiaoyangchun.tonguepicture.listener.ChangeListenerManager;
 import com.hali.xiaoyangchun.tonguepicture.listener.ChangeListenr;
 import com.hali.xiaoyangchun.tonguepicture.model.net.CommonRequest;
-import com.hali.xiaoyangchun.tonguepicture.model.net.interfaces.OkGoInterface;
-import com.hali.xiaoyangchun.tonguepicture.ui.base.BaseFragment;
+import com.hali.xiaoyangchun.tonguepicture.ui.base.BaseRequestFragment;
+import com.hali.xiaoyangchun.tonguepicture.utils.DataUtils;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class TonguePicDetailFragment extends BaseFragment implements OkGoInterface, ChangeListenr {
+public class TonguePicDetailFragment extends BaseRequestFragment implements ChangeListenr {
 
     public static String TonguePicDetailFragment_TAG = "TonguePicDetailFragment_TAG";
 
@@ -30,6 +32,7 @@ public class TonguePicDetailFragment extends BaseFragment implements OkGoInterfa
 
     @Override
     public void initViews() {
+        super.initViews();
         tongueImg = findView(R.id.iv_tongue);
         name = findView(R.id.tv_name);
         time = findView(R.id.tv_time);
@@ -47,14 +50,20 @@ public class TonguePicDetailFragment extends BaseFragment implements OkGoInterfa
     @Override
     public void initData() {
         ChangeListenerManager.Companion.getInstance().registerListener("tongue_detail", this);
-        String picPath = mActivity.getIntent().getStringExtra("picPath");
-        CommonRequest.INSTANCE.getTongueDetial(mActivity, picPath, this);
+        User user = new Gson().fromJson(mActivity.getIntent().getStringExtra("user"), User.class);
+        Glide.with(this).load("https://" + user.getPicPath()).into(tongueImg);
+        name.setText(user.getName() + "");
+        time.setText(DataUtils.getSimpleDate(user.getTime(), "yyyy.MM.dd") + "");
+        otherString.setText(user.getOtherString() + "");
+        CommonRequest.INSTANCE.getTongueDetial(mActivity, user.getPicPath(), this);
+        showProgressDialog();
     }
 
     @Override
     public void onSuccess(@Nullable Object response, int requestCode) {
         Log.i("诊断详情", response.toString());
         ChangeListenerManager.Companion.getInstance().notifyDataChanged("tongue_detail", response);
+        hideProgressDialog();
     }
 
     /**
@@ -68,7 +77,7 @@ public class TonguePicDetailFragment extends BaseFragment implements OkGoInterfa
 
     @Override
     public void onError(@NotNull String error) {
-
+        hideProgressDialog();
     }
 
     @Override
@@ -88,5 +97,11 @@ public class TonguePicDetailFragment extends BaseFragment implements OkGoInterfa
             v3.setText(r3[1] + "");
             v4.setText(r4[1] + "");
         }
+    }
+
+    @NotNull
+    @Override
+    public String getRequestUrl() {
+        return null;
     }
 }

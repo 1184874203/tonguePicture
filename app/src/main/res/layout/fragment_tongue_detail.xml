@@ -86,7 +86,6 @@
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:text="瘦薄舌"
             android:textColor="@color/tab_selected_color"
             android:textSize="15sp" />
 
@@ -95,8 +94,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="60dp"
-            android:text="心脾两虚,阴虚火旺"
-
             android:textSize="15sp" />
 
     </LinearLayout>
@@ -130,7 +127,6 @@
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:text="红舌"
             android:textColor="@color/tab_selected_color"
             android:textSize="15sp" />
 
@@ -139,7 +135,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="60dp"
-            android:text="阴虚"
             android:textSize="15sp" />
     </LinearLayout>
 
@@ -172,7 +167,6 @@
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:text="灰黑苔"
             android:textColor="@color/tab_selected_color"
             android:textSize="15sp" />
 
@@ -215,7 +209,6 @@
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:text="嫩舌"
             android:textColor="@color/tab_selected_color"
             android:textSize="15sp" />
 
@@ -225,7 +218,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="60dp"
-            android:text="虚寒证，慢性病后期"
             android:textSize="15sp" />
 
     </LinearLayout>

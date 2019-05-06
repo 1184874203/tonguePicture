@@ -13,6 +13,7 @@ import com.hali.xiaoyangchun.tonguepicture.listener.ChangeListenerManager
 import com.hali.xiaoyangchun.tonguepicture.model.net.CommonRequest
 import com.hali.xiaoyangchun.tonguepicture.model.net.RequestConstant
 import com.hali.xiaoyangchun.tonguepicture.model.net.interfaces.OkGoInterface
+import com.hali.xiaoyangchun.tonguepicture.ui.activity.SingleFAHelper
 import com.hali.xiaoyangchun.tonguepicture.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_tonguepic_commit.*
 import java.io.File
@@ -71,6 +72,8 @@ class TonguePicCommitFragment : BaseFragment(), OkGoInterface {
                 saveDB {
                     ChangeListenerManager.getInstance()
                             .notifyDataChanged(ChangeListenerManager.CHANGELISTENERMANAGER_DB_INSERT, it)
+                    SingleFAHelper.gotoTonguePicDetailFragment(mActivity, it)
+                    mActivity.finish()
                 }
             }
         }

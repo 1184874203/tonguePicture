@@ -3,6 +3,8 @@ package com.hali.xiaoyangchun.tonguepicture.ui.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import com.google.gson.Gson
+import com.hali.xiaoyangchun.tonguepicture.bean.User
 import com.hali.xiaoyangchun.tonguepicture.ui.fragment.CameraFragment
 import com.hali.xiaoyangchun.tonguepicture.ui.fragment.NickChangeFragment
 import com.hali.xiaoyangchun.tonguepicture.ui.fragment.TonguePicCommitFragment
@@ -29,12 +31,12 @@ object SingleFAHelper {
         activity.startActivity(intent)
     }
 
-    fun gotoTonguePicDetailFragment(activity: Activity, id: String) {
+    fun gotoTonguePicDetailFragment(activity: Activity, user: User) {
         val intent = Intent(activity, SingleFragmentActivity::class.java)
         intent.putExtra(SingleFragmentActivity.TITLE, "诊断详情")
         intent.putExtra(SingleFragmentActivity.TAG, TonguePicDetailFragment.TonguePicDetailFragment_TAG)
         intent.putExtra(SingleFragmentActivity.NEEDTOOLBAR, true)
-        intent.putExtra("picPath", id)
+        intent.putExtra("user", Gson().toJson(user))
         activity.startActivity(intent)
     }
 

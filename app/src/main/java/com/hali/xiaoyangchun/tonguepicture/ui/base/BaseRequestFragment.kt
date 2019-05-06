@@ -1,7 +1,6 @@
 package com.hali.xiaoyangchun.tonguepicture.ui.base
 
 import android.app.Dialog
-import android.os.Bundle
 import com.hali.xiaoyangchun.tonguepicture.R
 import com.hali.xiaoyangchun.tonguepicture.model.net.interfaces.OkGoInterface
 import com.lzy.okgo.OkGo
@@ -19,10 +18,8 @@ abstract class BaseRequestFragment : BaseFragment(), OkGoInterface {
 
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun initViews() {
         progressDialog = Dialog(activity, R.style.progress_dialog)
-        //showProgressDialog()
     }
 
     fun showProgressDialog() {
