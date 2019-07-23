@@ -42,7 +42,7 @@ abstract class BaseRequestFragment : BaseFragment(), OkGoInterface {
     abstract fun getRequestUrl(): String
 
     override fun onDestroy() {
-        OkGo.getInstance().cancelTag(TAG)
+        OkGo.getInstance().cancelTag(this)
         super.onDestroy()
     }
 }

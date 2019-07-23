@@ -11,7 +11,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="@dimen/activity_margin_10"
         android:background="?android:attr/selectableItemBackground">
 
@@ -34,11 +34,19 @@
             android:textColor="@color/grey_500"
             android:textSize="@dimen/text_size_14" />
 
+        <ImageView
+            android:id="@+id/iv_red_dot"
+            android:layout_alignBaseline="@id/tv_list_title"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_dot"
+            android:layout_width="9dp"
+            android:layout_height="9dp" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
-            android:layout_below="@+id/tv_list_summary">
+            android:layout_below="@id/tv_list_summary">
 
             <TextView
                 android:id="@+id/tv_list_time"
@@ -54,7 +62,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="分类"
                 android:textColor="@color/grey_400"
                 android:textSize="@dimen/text_size_14" />
         </RelativeLayout>

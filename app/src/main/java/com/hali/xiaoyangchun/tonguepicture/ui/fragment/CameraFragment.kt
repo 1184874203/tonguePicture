@@ -1,6 +1,7 @@
 package com.hali.xiaoyangchun.tonguepicture.ui.fragment
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.provider.MediaStore
 import android.support.design.widget.FloatingActionButton
 import android.view.View
 import android.widget.ImageButton
+import android.widget.TextView
 import com.hali.xiaoyangchun.tonguepicture.R
 import com.hali.xiaoyangchun.tonguepicture.camera.CameraView
 import com.hali.xiaoyangchun.tonguepicture.interfaces.CameraAction
@@ -36,6 +38,8 @@ class CameraFragment : BaseFragment(), CameraAction, CropCallback {
 
     private val REQUEST_CODE_PICK = 0x0001
 
+    protected lateinit var progressDialog: Dialog
+
     override fun getLayoutId() = R.layout.fragment_camera
 
     override fun initViews() {
@@ -43,6 +47,7 @@ class CameraFragment : BaseFragment(), CameraAction, CropCallback {
         mCameraView = findView(R.id.camera)
         cropImgPresenter = CropImgPresenter(activity!!)
         mCropImageView = findView(R.id.cropImageView)
+        progressDialog = Dialog(mActivity, R.style.progress_dialog)
     }
 
     override fun initData() {
@@ -53,6 +58,7 @@ class CameraFragment : BaseFragment(), CameraAction, CropCallback {
             cameraPresenter.switchCameraFacing()
         }
         findView<ImageButton>(R.id.buttonDone).setOnClickListener {
+            showProgressDialog()
             cropImgPresenter.cropImage()
         }
         findView<ImageButton>(R.id.buttonPickImage).setOnClickListener {
@@ -83,6 +89,20 @@ class CameraFragment : BaseFragment(), CameraAction, CropCallback {
         cropImgPresenter.saveInstanceState(outState)
     }
 
+    fun showProgressDialog() {
+        progressDialog.setContentView(R.layout.dialog_progress_layout)
+        progressDialog.setCancelable(false)
+        progressDialog.findViewById<TextView>(R.id.tv_progressmsg).setText("处理中")
+        progressDialog.window.setBackgroundDrawableResource(android.R.color.transparent)
+        progressDialog.show()
+    }
+
+    fun hideProgressDialog() {
+        if (progressDialog.isShowing) {
+            progressDialog.dismiss()
+        }
+    }
+
     override fun onPictureTaken(cameraView: CameraView?, data: ByteArray?) {
         if (data == null) return
         imagePath = FileUtil.savePicture(data) {
@@ -104,6 +124,7 @@ class CameraFragment : BaseFragment(), CameraAction, CropCallback {
 
     override fun onSuccess(cropped: Bitmap?) {
         FileUtil.saveFile(cropped!!, imagePath!!) {
+            hideProgressDialog()
             SingleFAHelper.gotoTonguePicCommitFragment(activity!!, imagePath!!)
             activity!!.finish()
         }

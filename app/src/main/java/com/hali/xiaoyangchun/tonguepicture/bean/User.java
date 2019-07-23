@@ -1,8 +1,8 @@
 package com.hali.xiaoyangchun.tonguepicture.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 
 @Entity
 public class User {
@@ -14,9 +14,11 @@ public class User {
     private String sex;
     private String otherString;
     private Long time;
-    @Generated(hash = 1978371067)
+    private boolean isRead;
+
+    @Generated(hash = 1315308320)
     public User(long id, String PicPath, String name, int age, String sex,
-            String otherString, Long time) {
+                String otherString, Long time, boolean isRead) {
         this.id = id;
         this.PicPath = PicPath;
         this.name = name;
@@ -24,6 +26,7 @@ public class User {
         this.sex = sex;
         this.otherString = otherString;
         this.time = time;
+        this.isRead = isRead;
     }
     @Generated(hash = 586692638)
     public User() {
@@ -69,5 +72,13 @@ public class User {
     }
     public void setTime(Long time) {
         this.time = time;
+    }
+
+    public boolean getIsRead() {
+        return this.isRead;
+    }
+
+    public void setIsRead(boolean isRead) {
+        this.isRead = isRead;
     }
 }

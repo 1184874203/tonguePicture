@@ -5,6 +5,15 @@ public class TongueResult {
     private String key2;
     private String key3;
     private String key4;
+    private String ImgAfterProcess;
+
+    public String getImgAfterProcess() {
+        return ImgAfterProcess;
+    }
+
+    public void setImgAfterProcess(String imgAfterProcess) {
+        ImgAfterProcess = imgAfterProcess;
+    }
 
     public String getKey1() {
         return key1;

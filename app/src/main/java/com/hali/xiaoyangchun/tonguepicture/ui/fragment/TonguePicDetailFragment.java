@@ -1,5 +1,6 @@
 package com.hali.xiaoyangchun.tonguepicture.ui.fragment;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,6 +10,7 @@ import com.google.gson.Gson;
 import com.hali.xiaoyangchun.tonguepicture.R;
 import com.hali.xiaoyangchun.tonguepicture.bean.TongueResult;
 import com.hali.xiaoyangchun.tonguepicture.bean.User;
+import com.hali.xiaoyangchun.tonguepicture.dao.Manager.ManagerFactory;
 import com.hali.xiaoyangchun.tonguepicture.listener.ChangeListenerManager;
 import com.hali.xiaoyangchun.tonguepicture.listener.ChangeListenr;
 import com.hali.xiaoyangchun.tonguepicture.model.net.CommonRequest;
@@ -24,6 +26,7 @@ public class TonguePicDetailFragment extends BaseRequestFragment implements Chan
 
     private TextView name, time, otherString, k1, k2, k3, k4, v1, v2, v3, v4;
     private ImageView tongueImg;
+    private User user;
 
     @Override
     public int getLayoutId() {
@@ -50,7 +53,7 @@ public class TonguePicDetailFragment extends BaseRequestFragment implements Chan
     @Override
     public void initData() {
         ChangeListenerManager.Companion.getInstance().registerListener("tongue_detail", this);
-        User user = new Gson().fromJson(mActivity.getIntent().getStringExtra("user"), User.class);
+        user = new Gson().fromJson(mActivity.getIntent().getStringExtra("user"), User.class);
         Glide.with(this).load("https://" + user.getPicPath()).into(tongueImg);
         name.setText(user.getName() + "");
         time.setText(DataUtils.getSimpleDate(user.getTime(), "yyyy.MM.dd") + "");
@@ -62,7 +65,10 @@ public class TonguePicDetailFragment extends BaseRequestFragment implements Chan
     @Override
     public void onSuccess(@Nullable Object response, int requestCode) {
         Log.i("诊断详情", response.toString());
+        user.setIsRead(true);
+        ManagerFactory.Companion.getInstance(mActivity).getUserManager().saveOrUpdate(user);
         ChangeListenerManager.Companion.getInstance().notifyDataChanged("tongue_detail", response);
+        ChangeListenerManager.Companion.getInstance().notifyDataChanged("changeListenerManager_db_read", response);
         hideProgressDialog();
     }
 
@@ -96,6 +102,10 @@ public class TonguePicDetailFragment extends BaseRequestFragment implements Chan
             v2.setText(r2[1] + "");
             v3.setText(r3[1] + "");
             v4.setText(r4[1] + "");
+            String imgUrl = result.getImgAfterProcess();
+            if (!TextUtils.isEmpty(imgUrl) && isAdded() && mActivity != null) {
+                Glide.with(mActivity).load(imgUrl).into(tongueImg);
+            }
         }
     }
 
@@ -103,5 +113,11 @@ public class TonguePicDetailFragment extends BaseRequestFragment implements Chan
     @Override
     public String getRequestUrl() {
         return null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Glide.clear(tongueImg);
     }
 }

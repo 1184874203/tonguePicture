@@ -22,28 +22,28 @@ object FragmentFactory {
         return null
     }
 
-    fun createTonguePicCommitFragment(bundle: Bundle):BaseFragment? {
-        var fragment = TonguePicCommitFragment()
+    private fun createTonguePicCommitFragment(bundle: Bundle): BaseFragment? {
+        val fragment = TonguePicCommitFragment()
         if (bundle != null)
             fragment.arguments = bundle
         return fragment
     }
 
-    fun createCameraFragment(bundle: Bundle): BaseFragment? {
-        var fragment = CameraFragment()
+    private fun createCameraFragment(bundle: Bundle): BaseFragment? {
+        val fragment = CameraFragment()
         if (bundle != null)
             fragment.arguments = bundle
         return fragment
     }
 
-    fun createTonguePicDetailFragment(bundle: Bundle): BaseFragment? {
+    private fun createTonguePicDetailFragment(bundle: Bundle): BaseFragment? {
         var fragment = TonguePicDetailFragment()
         if (bundle != null)
             fragment.arguments = bundle
         return fragment
     }
 
-    fun createNickChangeFragment(bundle: Bundle): BaseFragment? {
+    private fun createNickChangeFragment(bundle: Bundle): BaseFragment? {
         var fragment = NickChangeFragment()
         if (bundle != null)
             fragment.arguments = bundle

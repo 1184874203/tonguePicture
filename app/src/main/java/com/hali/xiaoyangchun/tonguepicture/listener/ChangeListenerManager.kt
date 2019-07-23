@@ -10,6 +10,7 @@ class ChangeListenerManager {
         private val TAG = "ChangeListenerManager"
 
         val CHANGELISTENERMANAGER_DB_INSERT = "changeListenerManager_db_insert"
+        val CHANGELISTENERMANAGER_DB_READ = "changeListenerManager_db_read"
 
         private var mListener: ChangeListenerManager? = null
         fun getInstance(): ChangeListenerManager {
@@ -25,19 +26,19 @@ class ChangeListenerManager {
     }
 
     fun registerListener(key: String, listener: ChangeListenr) {
-        var list = listenerMap.get(key)
+        var list = listenerMap[key]
         if (list == null) {
             list = ArrayList()
             listenerMap.put(key, list)
         }
-        if (!list!!.contains(listener)) {
+        if (!list.contains(listener)) {
             list.add(listener)
         }
     }
 
     fun unregisterListener(listener: ChangeListenr) {
         for (key in listenerMap.keys) {
-            var list = listenerMap.get(key)
+            val list = listenerMap.get(key)
             if (list!!.contains(listener)) {
                 list.remove(listener)
             }
@@ -45,7 +46,7 @@ class ChangeListenerManager {
     }
 
     fun notifyDataChanged(key: String, data: Any) {
-        var list = listenerMap.get(key)
+        val list = listenerMap.get(key)
         if (list != null) {
             for (listener in list) {
                 handler.post {

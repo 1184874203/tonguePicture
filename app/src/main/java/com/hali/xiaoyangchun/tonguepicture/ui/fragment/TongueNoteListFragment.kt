@@ -22,6 +22,7 @@ class TongueNoteListFragment : BaseFragment(), ChangeListenr {
     private lateinit var fab: FloatingActionButton
     private lateinit var dataList: MutableList<User>
     private lateinit var adapter: TongNoteListAdapter
+    private var lastClickItem = -1
 
     override fun getLayoutId() = R.layout.fragment_notelist
 
@@ -29,6 +30,7 @@ class TongueNoteListFragment : BaseFragment(), ChangeListenr {
         rv_list = findView(R.id.rv_list_main)
         fab = findView(R.id.fab_main)
         ChangeListenerManager.getInstance().registerListener(ChangeListenerManager.CHANGELISTENERMANAGER_DB_INSERT, this)
+        ChangeListenerManager.getInstance().registerListener(ChangeListenerManager.CHANGELISTENERMANAGER_DB_READ, this)
     }
 
     override fun initData() {
@@ -48,7 +50,7 @@ class TongueNoteListFragment : BaseFragment(), ChangeListenr {
                 })
             }
         }
-        var layoutManager = LinearLayoutManager(activity)
+        val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rv_list.layoutManager = layoutManager
         dataList = ManagerFactory.getInstance(activity!!).getUserManager().queryAll()
@@ -57,23 +59,24 @@ class TongueNoteListFragment : BaseFragment(), ChangeListenr {
         initListener()
     }
 
-    fun initListener() {
+    private fun initListener() {
         adapter.itemClickListener = object : TongNoteListAdapter.ItemClickListener {
-            override fun onItemClick(view: View, user: User) {
+            override fun onItemClick(view: View, user: User, pos: Int) {
+                lastClickItem = pos
                 SingleFAHelper.gotoTonguePicDetailFragment(activity!!, user)
             }
         }
 
         adapter.itemLongClickListener = object : TongNoteListAdapter.ItemLongClickListener {
             override fun onItemLongClick(view: View, user: User) {
-                var builder = AlertDialog.Builder(activity)
+                val builder = AlertDialog.Builder(activity)
                 builder.setTitle("提示")
                 builder.setMessage("确定删除该条记录？")
                 builder.setCancelable(false)
                 builder.setPositiveButton("确定") { dialog, which ->
                     ManagerFactory.getInstance(activity!!).getUserManager().delete(user)
                     dataList.remove(user)
-                    adapter?.notifyDataSetChanged()
+                    adapter.notifyDataSetChanged()
                 }
                 builder.setNegativeButton("取消", null)
                 builder.create().show()
@@ -85,8 +88,12 @@ class TongueNoteListFragment : BaseFragment(), ChangeListenr {
         if (key.equals(ChangeListenerManager.CHANGELISTENERMANAGER_DB_INSERT)) {
             if (data is User) {
                 dataList.add(0, data)
-                adapter?.notifyDataSetChanged()
+                adapter.notifyDataSetChanged()
             }
+        }
+        if (key.equals(ChangeListenerManager.CHANGELISTENERMANAGER_DB_READ) && lastClickItem != -1) {
+            dataList[lastClickItem].isRead = true
+            adapter.notifyItemChanged(lastClickItem)
         }
     }
 

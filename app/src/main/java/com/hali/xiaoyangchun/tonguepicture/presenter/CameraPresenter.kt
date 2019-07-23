@@ -1,11 +1,8 @@
 package com.hali.xiaoyangchun.tonguepicture.presenter
 
 import android.app.Activity
-import com.hali.xiaoyangchun.tonguepicture.bean.User
 import com.hali.xiaoyangchun.tonguepicture.camera.CameraView
-import com.hali.xiaoyangchun.tonguepicture.dao.Manager.ManagerFactory
 import com.hali.xiaoyangchun.tonguepicture.interfaces.CameraAction
-import com.hali.xiaoyangchun.tonguepicture.utils.FileUtil
 
 
 class CameraPresenter(private var context: Activity) : CameraView.Callback(){
@@ -40,8 +37,4 @@ class CameraPresenter(private var context: Activity) : CameraView.Callback(){
     }
 
     var mCameraAction: CameraAction? = null
-
-    fun saveInDB(user: User) {
-        ManagerFactory.getInstance(context).getUserManager().save(user)
-    }
 }

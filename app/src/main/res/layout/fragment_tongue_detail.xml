@@ -14,8 +14,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/test2" />
+            android:layout_marginTop="20dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -29,21 +28,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="王翰林" />
+                android:text="姓名" />
 
             <TextView
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="提交于 2019年3月4日" />
+                android:text="提交时间" />
 
             <TextView
                 android:id="@+id/tv_otherString"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="症状 头晕，脑热，肠胃阵痛" />
+                android:text="其他症状" />
         </LinearLayout>
     </LinearLayout>
 
@@ -175,7 +174,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="60dp"
-            android:text="无"
             android:textSize="15sp" />
 
     </LinearLayout>

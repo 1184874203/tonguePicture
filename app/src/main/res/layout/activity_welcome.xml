@@ -6,9 +6,9 @@
 
     <ImageView
         android:id="@+id/iv_welcome"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/wel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/welcome"
         android:scaleType="fitXY"
         android:adjustViewBounds="true"
         android:layout_gravity="center"/>

@@ -2,7 +2,6 @@ package com.hali.xiaoyangchun.tonguepicture.ui.fragment
 
 import android.app.Dialog
 import android.text.TextUtils
-import android.util.Log
 import android.widget.*
 import com.bumptech.glide.Glide
 import com.hali.xiaoyangchun.tonguepicture.R
@@ -13,7 +12,6 @@ import com.hali.xiaoyangchun.tonguepicture.listener.ChangeListenerManager
 import com.hali.xiaoyangchun.tonguepicture.model.net.CommonRequest
 import com.hali.xiaoyangchun.tonguepicture.model.net.RequestConstant
 import com.hali.xiaoyangchun.tonguepicture.model.net.interfaces.OkGoInterface
-import com.hali.xiaoyangchun.tonguepicture.ui.activity.SingleFAHelper
 import com.hali.xiaoyangchun.tonguepicture.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_tonguepic_commit.*
 import java.io.File
@@ -60,28 +58,26 @@ class TonguePicCommitFragment : BaseFragment(), OkGoInterface {
             RequestConstant.REQUESTCODE_UPLOADIMAGE -> {
                 upLoadImgUrl = response.toString()
                 if (!TextUtils.isEmpty(upLoadImgUrl)) {
-                    CommonRequest.getTongueDetial(activity!!, response.toString(), this)
+                    saveDB {
+                        hideProgressDialog()
+                        ChangeListenerManager.getInstance()
+                                .notifyDataChanged(ChangeListenerManager.CHANGELISTENERMANAGER_DB_INSERT, it)
+                        mActivity.finish()
+                    }
+
                 } else {
                     Toast.makeText(activity!!, "图片上传失败!", Toast.LENGTH_SHORT).show()
                     hideProgressDialog()
-                }
-            }
-            RequestConstant.REQUESTCODE_TONGUEPICTURE_DETIAL -> {
-                Log.i(CommonRequest.TAG, "诊断结果：${response.toString()}")
-                hideProgressDialog()
-                saveDB {
-                    ChangeListenerManager.getInstance()
-                            .notifyDataChanged(ChangeListenerManager.CHANGELISTENERMANAGER_DB_INSERT, it)
-                    SingleFAHelper.gotoTonguePicDetailFragment(mActivity, it)
-                    mActivity.finish()
                 }
             }
         }
     }
 
     override fun onError(error: String) {
-        Toast.makeText(activity!!, "上传失败", Toast.LENGTH_SHORT).show()
-        hideProgressDialog()
+        mActivity.runOnUiThread {
+            Toast.makeText(activity!!, "上传失败", Toast.LENGTH_SHORT).show()
+            hideProgressDialog()
+        }
     }
 
     fun showProgressDialog() {
